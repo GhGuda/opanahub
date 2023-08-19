@@ -1,0 +1,1202 @@
+*{
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: 0;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    scroll-behavior: smooth;
+}
+
+
+:root{
+    --accent-color: rgba(245, 245, 245, 0.932);
+    --bg-color: rgba(82, 82, 82, 0.884);
+    --text-color: rgba(2, 2, 2, 0.925);
+    --text-hover-color: rgba(65, 65, 65, 0.733);
+    --btn-color: rgb(75, 0, 130);
+    --btn-hover-color: rgba(76, 4, 128, 0.829);
+    --warning-color: rgb(230, 10, 10);
+    --lost-color: rgba(168, 168, 168, 0.493);
+}
+
+
+body{
+    background: var(--bg-color);
+}
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    margin-top: -.5rem;
+}
+
+aside{
+    background: var(--accent-color);
+    height: 100vh;
+    position: fixed;
+    left: 18%;
+    width: 25rem;
+    overflow-y: scroll;
+}
+
+aside .logo{
+    font-size: 2rem;
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 900;
+    position: fixed;
+    width: 25rem;
+    background: var(--accent-color);
+    padding: 2rem 0;
+    z-index: 100;
+}
+
+.tag{
+    margin: 10rem 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem;
+    gap: 4rem;
+    font-size: 1.5rem;
+}
+
+.tag a{
+    color: var(--text-hover-color);
+    transition: .4s;
+    padding: 1rem 1.5rem;
+    border-radius: 20rem;
+}
+
+
+.tag  a:hover{
+    color: var(--text-color);
+    background: var(--lost-color);
+}
+
+.tap a{
+    position: relative;
+}
+
+
+ span.noti{
+    position: absolute;
+    right: 2%;
+    top: 20%;
+    background: var(--warning-color);
+    border-radius: 50%;
+    height: 1.3rem;
+    font-size: 1rem;
+    width: auto;
+    padding: .1rem;
+    text-align: center;
+    color: var(--accent-color);
+}
+
+
+
+aside .user{
+    position: fixed;
+    bottom: 0%;
+    background: var(--accent-color);
+    padding: 1rem 0;
+    width: 25rem;
+}
+
+aside .user a{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10rem;
+    margin: 0 2rem; 
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    background: var(--btn-color);
+    padding: .5rem;
+    border-radius: 20rem;
+    transition: .4s;
+}
+
+aside .user a:hover{
+    background: var(--btn-hover-color);
+}
+
+aside .user img{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -----------------------------------------------------------------------------Center Section------------------------------------------------------------------------------- */
+.center{
+    position: relative;
+    margin-left: 7%;
+    width: 35rem;
+    height: 99.2vh;
+    overflow-y: scroll;
+    background: var(--accent-color);
+}
+
+
+.heads{
+    position: fixed;
+    bottom: -1.8%;
+    width: 31.2rem;
+}
+
+.heads p{
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.4rem;
+    background: var(--accent-color);
+}
+
+
+.search{
+    position: sticky;
+    top: 0%;
+    width: 35rem;
+    background: var(--accent-color);
+    padding: 1rem;
+    backdrop-filter: blur(8px);
+    z-index: 100;
+}
+
+
+.card{
+    position: relative;
+}
+
+.card .cards{
+    width: 100%;
+    padding: 2rem;
+    border-bottom: .1rem solid var(--bg-color);
+    transition: .3s;
+}
+
+.cards:hover{
+    background: var(--lost-color);
+}
+
+.card .cards .account{
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+.account a{
+    color: var(--text-color);
+    transition: .4s;
+}
+
+.content{
+    margin: 1rem 0;
+}
+
+.content a{
+    color: var(--text-hover-color);
+}
+
+.content img{
+    width: 100%;
+    margin-top: .5rem;
+}
+
+
+.account a:hover{
+    color: var(--text-hover-color);
+}
+
+.account .owner{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: -1rem;
+}
+
+
+.time p{
+    margin-bottom: -.2rem;
+}
+
+.time small{
+    color: var(--text-hover-color);
+}
+
+.smal{
+    display: flex;
+    gap: 1rem;
+}
+
+
+.ttt{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+
+
+.account img{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.actions{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.actions .like{
+    color: var(--btn-hover-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+    font-size: 1rem;
+    transition: .4s;
+}
+
+
+.actions .like:hover{
+    color: var(--accent-color);
+}
+
+
+.comment{
+    margin: 1rem 0;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comment .account .time{
+    margin-top: -1rem;
+}
+
+.comment .account .time p{
+    font-size: 1.1rem;
+}
+
+
+.comment .account{
+    display: flex;
+    align-items: center;
+}
+
+.comment .message{
+    background: var(--lost-color);
+    border-radius: 1rem;
+    padding: .5rem;
+}
+
+
+.comment .message p.msg{
+    margin-left: 2.8rem;
+    margin-top: -.6rem;
+    font-size: .8rem;
+}
+
+
+.view{
+    margin-top: .5rem;
+    text-align: end;
+}
+
+.view a{
+    color: var(--bg-color);
+    transition: .4s;
+}
+
+.view a:hover{
+    color: var(--text-color);
+}
+
+
+.views{
+    margin-top: .5rem;
+    text-align: end;
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.views a{
+    color: var(--bg-color);
+    transition: .4s;
+}
+
+.views a:hover{
+    color: var(--text-color);
+}
+
+
+.guda{
+    position: absolute;
+    left: 70%;
+}
+
+.guda form{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.guda form input{
+    background: var(--btn-color);
+    color: var(--accent-color);
+    padding: .5rem;
+    border-radius: 3rem;
+    cursor: pointer;
+
+}
+
+.guda form a{
+    background: var(--btn-color);
+    color: var(--accent-color);
+    padding: .5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+
+.about{
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem ;
+}
+
+
+.about .fff, .list{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+
+.about .fff a{
+    color: var(--text-color);
+}
+
+.about .fff a span{
+    font-weight: 900;
+}
+
+
+.formm{
+    position: relative;
+}
+
+
+.formm form, .profile{
+    position: relative;
+}
+
+.backimg img.back{
+    position: relative;
+    width: 100%;
+    height: 20rem;
+}
+
+.imgg{
+    position: absolute;
+    bottom:60%;
+    margin-bottom: 1rem;
+    right: 2%;
+    background: var(--accent-color);
+    border-radius: 1rem;
+    padding: .2rem;
+}
+
+.imgg img{
+    width: 3rem;
+    height: 2.5rem;
+    position: relative;
+}
+
+.imgg input.input{
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+
+.profileimg{
+    position: absolute;
+    top: 30%;
+    left: 4%;
+}
+
+
+.prof{
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+}
+
+
+.imggg{
+    position: absolute;
+    bottom: 0%;
+    margin-bottom: 1rem;
+    right: 2%;
+    background: var(--accent-color);
+    border-radius: 1rem;
+    padding: .2rem;
+}
+
+
+.imggg img{
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+    position: relative;
+}
+
+.imggg input.input{
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+
+
+.writes{
+    margin-top: 4rem;
+    width: 100%;
+    padding: 1rem;
+}
+
+.ins{
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+    gap: .3rem;
+}
+
+
+.ins label{
+    font-size: 1.2rem;
+}
+
+.ins input{
+    padding: 1rem .2rem;
+    border: 0;
+    border-radius: .5rem;
+    font-size: 1rem;
+}
+
+
+.ins textarea{
+    resize: none;
+    height: 6rem;
+    border: 0;
+    padding: 1rem .2rem;
+    font-size: 1rem;
+}
+
+
+.btn{
+    width: 100%;
+    padding: 1rem .2rem;
+    background: var(--btn-color);
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+
+}
+
+
+
+
+
+
+/* -----------------------------------------------------------------------------left Section------------------------------------------------------------------------------- */
+.left{
+    width: 25rem;
+    right: 11%;
+    position: fixed;
+    height: 60rem;
+    background: var(--accent-color);
+    overflow-y: scroll;
+}
+
+.head{
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+    padding: 1rem 0;
+    background: var(--accent-color);
+}
+
+
+.trendcont{
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    border-bottom: .1rem solid var(--bg-color);
+}
+
+
+.trendcont .trends{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--lost-color);
+    padding: 0 .5rem;
+    color: var(--bg-color);
+    font-size: 1.2rem;
+    border-radius: 5rem;
+    transition: .4s;
+    margin: .5rem 1rem;
+}
+
+
+.trendcont .trends:hover{
+    background: var(--bg-color);
+    color: var(--accent-color);
+}
+
+
+
+.people{
+    /* height: 28rem; */
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    margin-top: 1rem;
+}
+
+.users{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    background: var(--text-hover-color);
+    margin: .5rem 1rem;
+    border-radius: 1rem;
+    transition: .4s;
+}
+
+
+.users:hover{
+    background: var(--bg-color);
+}
+
+
+
+.owner{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: -1rem;
+    color: var(--text-color);
+}
+
+
+.time p{
+    margin-bottom: -.2rem;
+}
+
+.time small{
+    color: var(--text-hover-color);
+}
+
+
+
+.users img{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.center::-webkit-scrollbar,
+ aside::-webkit-scrollbar,
+ .trendcont::-webkit-scrollbar,
+ .people::-webkit-scrollbar{
+    display: none;
+}
+
+
+
+/* ---------------------------------------------------Not Needed on big screens------------------------------------------ */
+
+.pana, nav, .lis, .yie{
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width:1850px){
+    .container{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+    }
+
+    aside{
+        background: var(--accent-color);
+        height: 100vh;
+        position: fixed;
+        left: 5%;
+        width: 25%;
+        overflow-y: scroll;
+    }
+
+    aside .logo{
+        font-size: 2rem;
+        text-align: center;
+        color: var(--text-color);
+        font-weight: 900;
+        position: fixed;
+        width: 25%;
+        background: var(--accent-color);
+        padding: 2rem 0;
+        z-index: 100;
+    }
+
+    .center{
+        position: relative;
+        margin-right: 7%;
+        width: 40%;
+        height: 99.2vh;
+        overflow-y: scroll;
+        background: var(--accent-color);
+    }
+
+    .left{
+        width: 25%;
+        right: 5%;
+        position: fixed;
+        background: var(--accent-color);
+    }
+
+    aside .user{
+        position: fixed;
+        bottom: 0%;
+        background: var(--accent-color);
+        padding: 1rem 0;
+        width: 25%;
+    }
+
+    aside .user a{
+        margin: 0 1rem; 
+    }
+
+    .search{
+        position: sticky;
+        top: 0%;
+        width: 35rem;
+        background: var(--accent-color);
+        padding: 1rem;
+        backdrop-filter: blur(8px);
+        z-index: 100;
+    }
+   
+    
+    .guda{
+        position: absolute;
+        left: 75%;
+    }
+    
+    .guda form{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+
+    .guda form .message{
+        font-size: 1.2rem;
+    }
+    
+    .guda form input{
+        background: var(--btn-color);
+        color: var(--accent-color);
+        padding: .5rem;
+        border-radius: 3rem;
+        cursor: pointer;
+    
+    }
+
+}
+
+
+
+
+
+
+
+@media (max-width:1350px){
+    .container{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+    }
+
+    aside{
+        display: none;
+    }
+
+    .left{
+        width: 40%;
+        right: 0%;
+        position: fixed;
+        background: var(--accent-color);
+    }
+
+    .center{
+        position: relative;
+        left: -24%;
+        width: 60%;
+        margin-right: 0%;
+        height: 99.2vh;
+        overflow-y: scroll;
+        background: var(--accent-color);
+    }
+
+    
+
+    .search{
+        position: sticky;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: space-between;
+        top: 0%;
+        width: 100%;
+        background: var(--accent-color);
+        padding: 1rem;
+        backdrop-filter: blur(8px);
+        z-index: 100;
+    }
+    
+    .guda{
+        position: absolute;
+        left: 70%;
+    }
+    
+    .guda form{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+
+    .guda form .message{
+        font-size: 1.2rem;
+    }
+    
+    .guda form input{
+        background: var(--btn-color);
+        color: var(--accent-color);
+        padding: .5rem;
+        border-radius: 3rem;
+        cursor: pointer;
+    
+    }
+
+    .yie{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        color: var(--text-color);
+        position: sticky;
+        top: 0%;
+        padding: 1rem 0;
+        background: whitesmoke;
+        margin-top: -1rem;
+    }
+
+    .yie .head{
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 900;
+        z-index: 0;
+    }
+
+    .lis{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .lis .toggler{
+        display: flex;
+        gap: .23rem;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .toggler .line{
+        background: var(--btn-color);
+        height: .3rem;
+        width: 2.2rem;
+    }
+
+    .lis img{
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    nav{
+        position: absolute;
+        z-index: 100;
+        top: 100%;
+        background: whitesmoke;
+        width: 94.5%;
+        padding: .5rem;
+        opacity: 0;
+        overflow: hidden;
+        transition: .4s;
+        display: none;
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+    }
+
+    .nav_show{
+        display: initial;
+        opacity: 1;
+    }
+
+    nav a{
+        display: flex;
+        margin: .5rem 0;
+        color: var(--text-hover-color);
+        transition: .4s;
+        padding: 1rem 1.5rem;
+        border-radius: 20rem;
+    }
+    
+    
+    nav  a:hover{
+        color: var(--text-color);
+        background: var(--lost-color);
+    }
+    
+    .tap a{
+        position: relative;
+    }
+    
+    
+     span.noti{
+        position: absolute;
+        right: 2%;
+        top: 20%;
+        background: var(--warning-color);
+        border-radius: 50%;
+        height: 1.3rem;
+        font-size: 1rem;
+        width: auto;
+        padding: .1rem;
+        text-align: center;
+        color: var(--accent-color);
+    }
+
+    .pana{
+        display: flex;
+        position: fixed;
+        bottom: 20%;
+        left: 51%;
+        z-index: 100;
+        background: var(--bg-color);
+        padding: .5rem;
+        border-radius: 50%;
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        height: 3rem;
+        width: 3rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .user{
+        background: var(--accent-color);
+        padding: 1rem 0;
+        width: 100%;
+    }
+    
+    .user a{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 1rem; 
+        font-size: 1.2rem;
+        color: var(--accent-color);
+        background: var(--btn-color);
+        padding: .5rem;
+        border-radius: 20rem;
+        transition: .4s;
+
+    }
+    
+    .user a:hover{
+        background: var(--btn-hover-color);
+    }
+    
+    .user img{
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+
+
+
+
+
+
+
+@media (max-width:750px){
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 75rem;
+        width: 100%;
+        position: relative;
+    }
+
+    aside{
+        display: none;
+    }
+
+    .left{
+        display: none;
+    }
+
+    .center{
+        position: relative;
+        margin-left: 0%;
+        width: 100%;
+        left: 0%;
+        height: 99.2vh;
+        overflow-y: scroll;
+        background: var(--accent-color);
+    }
+
+    .search{
+        position: sticky;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: space-between;
+        top: 0%;
+        width: 100%;
+        background: var(--accent-color);
+        padding: 1rem;
+        backdrop-filter: blur(1px);
+        z-index: 100;
+    }
+
+    form{
+        position: relative;
+        width: 100%;
+    }
+
+    
+    .guda{
+        position: absolute;
+        left: 68%;
+    }
+    
+    .guda form{
+        display: flex;
+        gap: .5rem;
+        align-items: center;
+    }
+
+
+    .guda form .message{
+        font-size: 1.2rem;
+    }
+    
+    .guda form input{
+        background: var(--btn-color);
+        color: var(--accent-color);
+        padding: .5rem;
+        border-radius: 3rem;
+        cursor: pointer;
+    
+    }
+
+    .yie{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        color: var(--text-color);
+        position: sticky;
+        top: 0%;
+        padding: 1rem 0;
+        background: var(--accent-color);
+        margin-top: -1rem;
+    }
+
+    .yie .head{
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 900;
+    }
+
+    .lis{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .lis .toggler{
+        display: flex;
+        gap: .23rem;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .toggler .line{
+        background: var(--btn-color);
+        height: .3rem;
+        width: 2.2rem;
+    }
+
+    .lis img{
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    nav{
+        position: absolute;
+        z-index: 100;
+        top: 100%;
+        background: whitesmoke;
+        width: 94.5%;
+        padding: .5rem;
+        opacity: 0;
+        overflow: hidden;
+        transition: .4s;
+        display: none;
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+    }
+
+    .nav_show{
+        display: initial;
+        opacity: 1;
+    }
+
+    nav a{
+        display: flex;
+        margin: .5rem 0;
+        color: var(--text-hover-color);
+        transition: .4s;
+        padding: 1rem 1.5rem;
+        border-radius: 20rem;
+    }
+    
+    
+    nav  a:hover{
+        color: var(--text-color);
+        background: var(--lost-color);
+    }
+    
+    .tap a{
+        position: relative;
+        display: flex;
+        gap: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    
+    span.noti{
+        position: absolute;
+        right: 2%;
+        top: 20%;
+        background: var(--warning-color);
+        border-radius: 50%;
+        height: 1.3rem;
+        font-size: 1rem;
+        width: auto;
+        padding: .1rem;
+        text-align: center;
+        color: var(--accent-color);
+    }
+
+    .pana{
+        left: 86%;
+    }
+
+    .user{
+        background: var(--accent-color);
+        padding: 1rem 0;
+        width: 100%;
+    }
+    
+    .user a{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 1rem; 
+        font-size: 1.2rem;
+        color: var(--accent-color);
+        background: var(--btn-color);
+        padding: .5rem;
+        border-radius: 20rem;
+        transition: .4s;
+
+    }
+    
+    .user a:hover{
+        background: var(--btn-hover-color);
+    }
+    
+    .user img{
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}

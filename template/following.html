@@ -1,0 +1,368 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpanaHub</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="logo">OpanaHub</div>
+
+            <div class="tag">
+                <div class="tap">
+                <a href="/frontpage">
+                    <i class="fa fa-house-user"></i>
+                        Home
+                </a>
+                </div>
+
+                <div class="tap">
+                    <a href="">
+                        <i class="fa fa-house-user"></i>
+                        Following
+                    </a>
+                </div>
+
+                <div class="tap">
+                <a href="{% url 'pana' %}">
+                    <i class="fas fa-plus-circle"></i>
+                    Pana
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                    <i class="fas fa-plus-circle"></i>
+                    Notifications
+
+                <span class="noti">99+</span>
+
+                </a>
+                </div>
+                
+                <div class="tap">
+                <a href="{% url 'profile' profile.user %}">
+                <i class="fa fa-user"></i>
+                    Profile
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="/setting">
+                <i class="fa fas fa-gear"></i>
+                    Account & Privacy
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                <i class="fas fas fa-user-plus"></i>
+                    Friends Requests
+
+                <span class="noti">50</span>
+                </a>
+                </div>
+
+            </div>
+            <div class="user">
+                <a href="{% url 'logout' %}">LogOut
+                <img src="{{profile.profile_img.url}}" alt="">
+                </a>
+            </div>
+        </aside>
+        
+        
+        <div class="center">
+            <div class="yie">
+                <div class="head">OpanaHub</div>
+            </div>
+           <div class="search">
+                <!-- <form action="" autocomplete="off"> -->
+                    <!-- <input type="text" name="search" placeholder="Search">
+                    <button type="submit">search</button> -->
+
+                    <div class="covv">
+                        <p class="ttt">{{profile.display_name}}</p>
+                        {% if post.count == 0 %}
+                            <small>{{post.count}} Pana</small>
+                        {% elif post.count == 1 %}
+                            <small>{{post.count}} Pana</small>
+                        {% else %}
+                            <small>{{post.count}} Panas</small>
+                        {% endif %}
+                    </div>
+                <!-- </form> -->
+                <div class="lis">
+                    <div class="toggler" onclick="Drop()">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+
+                    <!-- <a href="#">
+                        <img src="/img.jpg" alt="">
+                    </a> -->
+                </div>
+
+                <nav>
+                    <div class="tap">
+                        <a href="/frontpage">
+                            <i class="fa fa-house-user"></i>
+                            Home
+                        </a>
+                    </div>
+
+                    <div class="tap">
+                        <a href="">
+                            <i class="fa fa-house-user"></i>
+                            Following
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="{% url 'pana' %}">
+                            <i class="fas fa-plus-circle"></i>
+                            Pana
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="#">
+                            <i class="fas fa-plus-circle"></i>
+                            Notifications
+        
+                        <span class="noti">99+</span>
+        
+                        </a>
+                    </div>
+                        
+                    <div class="tap">
+                        <a href="{% url 'profile' profile.user %}">
+                        <i class="fa fa-user"></i>
+                            Profile
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="/setting">
+                        <i class="fa fas fa-gear"></i>
+                            Account & Privacy
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="#">
+                        <i class="fas fas fa-user-plus"></i>
+                            Friends Requests
+        
+                        <span class="noti">50</span>
+                        </a>
+                    </div>
+
+                        <div class="user">
+                            <a href="{% url 'logout' %}">LogOut
+                            <img src="{{profile.profile_img.url}}" alt="">
+                            </a>
+                        </div>
+                </nav>
+           </div>
+
+           
+           <div class="formm">
+                <div class="backimg">
+                    <img class="back" src="{{profile.back_img.url}}" alt="">
+                    <!-- <div class="imgg">
+                        <input class="input" type="file" name="" id="">
+                        <img src="/kindpng_7945427.png" alt="">
+                    </div> -->
+
+                    <div class="profileimg">
+                        <img class="prof" src="{{profile.profile_img.url}}" alt="">
+                        <!-- <div class="imggg">
+                            <input class="input" type="file" name="" id="">
+                            <img src="/kindpng_7945427.png" alt="">
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+           <div class="guda">
+                <form action="/follow" method="POST">
+                    {% csrf_token %}
+
+                    <input type="hidden"  name="follower" value="{{request.user}}" id="">
+                    <input type="hidden" name="following" value="{{profile.user}}" id="">
+
+                    {% if profile.user == request.user %}
+                        <a href="{% url 'setting' %}">Edit Profile</a>
+
+                    {% else %}
+                        <a href="" class="message">
+                            <i class="fa fa-message"></i>
+                        </a>
+                        <input type="submit" value="{{switch}}">
+                    {% endif %}
+                    
+                </form>
+           </div>
+
+           <div class="about">
+                <p>{{profile.display_name}}</p>
+                <small class="username">@{{profile.user}}</small>
+
+                <b>{{profile.bio}}</b>
+
+                <div class="list">
+                    {% if profile.web %}
+                        <a href="{{profile.web}}" class="web" target="_blank">
+                            <i class="fa fa-link"></i>
+                            {{profile.web}}
+                        </a>
+                    {% endif %}
+                    
+                    <small>
+                        <i class="fa far fa-calendar-alt"></i>
+                        {{profile.user.date_joined}}
+                    </small>
+                </div>
+                {% comment %} <div class="fff">
+                    <p>
+                        <a href="">
+                            {% if profile_visited_following <= 1 %}
+                                <span>{{profile_visited_following}}</span>
+                                Follower
+                            {% else %}
+                                <span>{{profile_visited_following}}</span>
+                                Followers
+                            {% endif %}
+                        </a>
+                    </p>
+                    <p>
+                        <a href="">
+                            <span>{{profile_visited_followers}}</span>
+                            Following
+                        </a>
+                    </p>
+                </div> {% endcomment %}
+           </div>
+
+           <div class="card">
+            <div class="head">
+                {% if profile_following %}
+                    {% if profile.user == request.user %}
+                        People you follow
+                    {% else %}
+                        People {{profile.user}} is following
+                    {% endif %}
+                {% else %}
+                    {% if profile.user == request.user %}
+                        Following none
+                    {% else %}
+                        {{profile.user}} is following none
+                    {% endif %}
+                {% endif %}
+            </div>
+
+
+            <div class="coverlis">
+            {% for followers in profile_following %}
+                <form action="" method="post">
+                    {% csrf_token %}
+
+                    <a href="/profile/{{followers.following}}" class="">
+                        <img src="{{followers.following.profile_img.url}}" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                <p>{{followers.following.display_name}}</p>
+                                <small>@{{followers.following}}</small>
+                            </div>
+                        </div>
+                    </a>
+
+                    <input type="hidden"  name="follower" value="{{request.user}}" id="">
+                    <input type="hidden" name="following" value="{{profile.user}}" id="">
+                    
+                    <a href="" class="btnn">Unfollow</a>
+                </form>
+            {% endfor %}
+            </div>
+
+            
+        </div>           
+        </div>
+
+
+
+
+        <div class="left">
+            <div class="trendcont">
+                <p class="head">Trending Now</p>
+                <a href="#" class="trends">
+                    <p>#themanisgo</p>
+                    <small>0 post</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#debee</p>
+                    <small>100 posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#obiri</p>
+                    <small>1k posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#NUNA</p>
+                    <small>400 posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#nuama</p>
+                    <small>95 posts</small>
+                </a>
+
+                <div class="views">
+                    <a href="#">View all</a>
+                </div>
+            </div>
+
+
+            <div class="people">
+                <p class="head">People you may know</p>
+                
+                <div>
+                    {% for users in suggested_profile %}
+                    <a href="/profile/{{users.user}}" class="users">
+                        <img src="{{users.profile_img.url}}" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                {% if users.display_name %}
+                                <p>{{users.display_name}}</p>
+                                {% endif %}
+                                <small>@{{users.user}}</small>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <!-- <div class="views">
+                        <a href="#">View all</a>
+                    </div> -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var drop = document.querySelector("nav");
+        function Drop(){
+            drop.classList.toggle("nav_show")
+        }
+    </script>
+</body>
+</html>

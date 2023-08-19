@@ -1,0 +1,163 @@
+*{
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: 0;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    scroll-behavior: smooth;
+}
+
+
+:root{
+    --accent-color: rgba(245, 245, 245, 0.932);
+    --bg-color: rgba(82, 82, 82, 0.884);
+    --text-color: rgba(2, 2, 2, 0.925);
+    --text-hover-color: rgba(65, 65, 65, 0.733);
+    --btn-color: rgb(75, 0, 130);
+    --btn-hover-color: rgba(76, 4, 128, 0.829);
+    --warning-color: rgb(230, 10, 10);
+    --lost-color: rgba(168, 168, 168, 0.493);
+}
+
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-color);
+    height: 100vh;
+}
+
+.container{
+    border-radius: 1rem;
+    max-width: 30rem;
+    width: 100%;
+    background: var(--accent-color);
+    padding: 1rem;
+}
+
+.container .head{
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-color);
+}
+
+.noti{
+    margin-top: -1rem;
+    text-align: center;
+    color: var(--warning-color);
+}
+
+
+form {
+    width: 100%;
+}
+
+.input-sec{
+    display: flex;
+    gap: .2rem;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+
+.input-sec span.name{
+    color: var(--text-hover-color);
+}
+
+
+.input-sec input{
+    border: 0;
+    padding: .5rem;
+    border-radius: .4rem;
+    color: var(--text-color);
+}
+
+.input-sec input::placeholder{
+    color: var(--lost-color);
+}
+
+form p{
+    font-size: 100%;
+    color: var(--warning-color);
+}
+
+form .btn{
+    width: 100%;
+    padding: .5rem;
+    background: var(--btn-color);
+    color: var(--accent-color);
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+    border: 0;
+    transition: .4s;
+}
+
+form .btn:hover{
+    background: var(--btn-hover-color);
+    cursor: pointer;
+}
+
+.ask{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ask p{
+    font-size: 1rem;
+}
+
+.ask p a{
+    color: var(--btn-hover-color);
+    transition: .4s;
+}
+
+.ask p a:hover{
+    color: var(--btn-color);
+}
+
+.asked{
+    text-align: end;
+}
+
+.ask .forgot{
+    font-size: .8rem;
+}
+
+
+img{
+    width: 100%;
+}
+
+@media (max-width:750px){
+
+    .container{
+        position: relative;
+        width: 100%;
+    }
+
+    form {
+        position: relative;
+        width: 100%;
+    }
+    
+    .input-sec{
+        position: relative;
+        display: flex;
+        gap: .2rem;
+        flex-direction: column;
+        margin: 1rem 0;
+    }
+
+    .input-sec input{
+        position: relative;
+        widows: 100%;
+        border: 0;
+        padding: .5rem;
+        border-radius: .4rem;
+        color: var(--text-color);
+    }
+}

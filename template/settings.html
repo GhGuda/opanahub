@@ -1,0 +1,277 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpanaHub</title>
+    <link rel="stylesheet" href="{% static 'css/seting.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="logo">OpanaHub</div>
+
+            <div class="tag">
+                <div class="tap">
+                <a href="/frontpage">
+                    <i class="fa fa-house-user"></i>
+                        Home
+                </a>
+                </div>
+
+                <div class="tap">
+                    <a href="">
+                        <i class="fa fa-house-user"></i>
+                        Following
+                    </a>
+                </div>
+
+                <div class="tap">
+                <a href="{% url 'pana' %}">
+                    <i class="fas fa-plus-circle"></i>
+                    Pana
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                    <i class="fas fa-plus-circle"></i>
+                    Notifications
+
+                <span class="noti">99+</span>
+
+                </a>
+                </div>
+                
+                <div class="tap">
+                <a href="{% url 'profile' profile.user %}">
+                <i class="fa fa-user"></i>
+                    Profile
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="/setting">
+                <i class="fa fas fa-gear"></i>
+                    Account & Privacy
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                <i class="fas fas fa-user-plus"></i>
+                    Friends Requests
+
+                <span class="noti">50</span>
+                </a>
+                </div>
+
+            </div>
+
+            <div class="user">
+                <a href="{% url 'logout' %}">LogOut
+                <img src="{{profile.profile_img.url}}" alt="">
+                </a>
+            </div>
+        </aside>
+        
+        
+        <div class="center">
+            <div class="yie">
+                <div class="head">OpanaHub</div>
+            </div>
+           <div class="search">
+                <div class="covv">
+                    {% if profile.display_name %}
+                    <p class="ttt">{{profile.display_name}}</p>
+                    {% endif %}
+                    <small>@{{profile.user}}</small><br>
+                    <a href="/frontpage">Home</a>
+                </div>
+                <div class="lis">
+                    <div class="toggler" onclick="Drop()">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+
+                <nav>
+                    <div class="tap">
+                        <a href="/frontpage">
+                            <i class="fa fa-house-user"></i>
+                            Home
+                        </a>
+                    </div>
+
+                    <div class="tap">
+                        <a href="">
+                            <i class="fa fa-house-user"></i>
+                            Following
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="{% url 'pana' %}">
+                            <i class="fas fa-plus-circle"></i>
+                            Pana
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="#">
+                            <i class="fas fa-plus-circle"></i>
+                            Notifications
+        
+                        <span class="noti">99+</span>
+        
+                        </a>
+                    </div>
+                        
+                    <div class="tap">
+                        <a href="{% url 'profile' profile.user %}">
+                        <i class="fa fa-user"></i>
+                            Profile
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="/setting">
+                        <i class="fa fas fa-gear"></i>
+                            Account & Privacy
+                        </a>
+                    </div>
+        
+                    <div class="tap">
+                        <a href="#">
+                        <i class="fas fas fa-user-plus"></i>
+                            Friends Requests
+        
+                        <span class="noti">50</span>
+                        </a>
+                    </div>
+
+                        <div class="user">
+                            <a href="{% url 'logout' %}">LogOut
+                            <img src="{{profile.profile_img.url}}" alt="">
+                            </a>
+                        </div>
+                </nav>
+           </div>
+
+
+
+           <div class="formm">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="backimg">
+                        <img class="back" src="{{profile.back_img.url}}">
+                        <div class="imgg">
+                            <input class="input" type="file" accept="image/*" name="backimg" id="">
+                            <img src="{% static 'img/kindpng_7945427.png' %}" alt="">
+                        </div>
+
+                        <div class="profileimg">
+                            <img class="prof" src="{{profile.profile_img.url}}">
+                            <div class="imggg">
+                                <input class="input" type="file" accept="image/*" name="profileim" id="">
+                                <img src="{% static 'img/kindpng_7945427.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <div class="writes">
+                        <div class="ins">
+                            <label for="">Display Name</label>
+                            <input type="text" name="display_name" value="{{profile.display_name}}" placeholder="Display name">
+                        </div>
+                        <div class="ins">
+                            <label for="">Bio</label>
+                           <textarea name="bio" placeholder="Bio" >{{profile.bio}}</textarea>
+                        </div>
+                        <div class="ins">
+                            <label for="">Website</label>
+                            <small>Start with "https://yourwebsite.com"</small>
+                            <input type="text" name="web" value="{{profile.web}}" placeholder="https://OpanaHub.com">
+                        </div>
+
+                        <button type="submit" class="btn">Update</button>
+                    </div>
+
+                </form>
+           </div>
+        </div>
+
+
+
+
+        <div class="left">
+            <div class="trendcont">
+                <p class="head">Trending Now</p>
+                <a href="#" class="trends">
+                    <p>#themanisgo</p>
+                    <small>0 post</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#debee</p>
+                    <small>100 posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#obiri</p>
+                    <small>1k posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#NUNA</p>
+                    <small>400 posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#nuama</p>
+                    <small>95 posts</small>
+                </a>
+
+                <div class="views">
+                    <a href="#">View all</a>
+                </div>
+            </div>
+
+
+            <div class="people">
+                <p class="head">People you may know</p>
+                
+                <div>
+                    {% for users in suggested_profile %}
+                    <a href="/profile/{{users.user}}" class="users">
+                        <img src="{{users.profile_img.url}}" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                {% if users.display_name %}
+                                <p>{{users.display_name}}</p>
+                                {% endif %}
+                                <small>@{{users.user}}</small>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    <!-- <div class="views">
+                        <a href="#">View all</a>
+                    </div> -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var drop = document.querySelector("nav");
+        function Drop(){
+            drop.classList.toggle("nav_show")
+        }
+    </script>
+</body>
+</html>

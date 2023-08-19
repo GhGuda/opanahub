@@ -1,0 +1,365 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpanaHub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="logo">OpanaHub</div>
+
+            <div class="tag">
+                <div class="tap">
+                <a href="#">
+                    <i class="fa fa-house-user"></i>
+                    Following
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                    <i class="fas fa-plus-circle"></i>
+                    Pana
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                    <i class="fas fa-plus-circle"></i>
+                    Notifications
+
+                <span class="noti">99+</span>
+
+                </a>
+                </div>
+                
+                <div class="tap">
+                <a href="#">
+                <i class="fa fa-user"></i>
+                    Profile
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                <i class="fa fas fa-gear"></i>
+                    Account & Privacy
+                </a>
+                </div>
+
+                <div class="tap">
+                <a href="#">
+                <i class="fas fas fa-user-plus"></i>
+                    Friends Requests
+
+                <span class="noti">50</span>
+                </a>
+                </div>
+
+            </div>
+
+            <div class="user">
+                <a href="#">LogOut
+                <img src="/pic.jpg" alt="">
+                </a>
+            </div>
+        </aside>
+        
+        
+        <div class="center">
+            <div class="yie">
+                <div class="head">OpanaHub</div>
+            </div>
+           <div class="search">
+                <form action="" autocomplete="off">
+                    <input type="text" name="search" placeholder="Search">
+                    <button type="submit">search</button>
+                </form>
+                <div class="lis">
+                    <div class="toggler" onclick="Drop()">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+
+                    <a href="#">
+                        <img src="/img.jpg" alt="">
+                    </a>
+                </div>
+
+                <nav>
+                    <div class="tap">
+                        <a href="#">
+                            <i class="fa fa-house-user"></i>
+                            Following
+                        </a>
+                        </div>
+        
+                        <div class="tap">
+                            <a href="#">
+                                <i class="fas fas fa-user-plus"></i>
+                                Friends Requests
+            
+                                <span class="noti">50</span>
+                            </a>
+                        </div>
+                        
+                        <div class="user">
+                            <a href="#">LogOut
+                            <img src="/pic.jpg" alt="">
+                            </a>
+                        </div>
+                   </nav>
+           </div>
+
+           <a href="" class="pana">
+                <i class="fa fa-pen"></i>
+            </a>
+
+           <div class="card">
+                <div class="cards">
+                    <div class="account">
+                        <a href="">
+                            <img src="/pic.jpg" alt="">
+                            <div class="owner">
+                                <div class="time">
+                                    <p>Display Name</p>
+                                    <small>@username</small>
+                                </div>
+                         </a>
+                                <div class="smal">
+                                    <small>•</small>
+                                    <small>Just now</small>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="content">
+                        <a href="#">
+                            <caption>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod voluptate iure doloribus iste natus dicta voluptates libero amet necessitatibus, impedit consequuntur quis dolores! Corrupti sunt labore laborum. Temporibus, amet? Aut, quo! Nihil recusandae nam cum exercitationem voluptate at, impedit quo facere non ex distinctio eius veniam cupiditate nisi sit ullam, in blanditiis voluptatem! Inventore, ab ex soluta voluptates accusantium dolor saepe fugiat dolore quam molestiae quisquam dolorem itaque, sint adipisci. Saepe alias iusto fugit explicabo expedita quaerat, rem, maxime odit vel voluptas consectetur earum iure harum hic. Facere doloremque optio veniam ducimus ratione consectetur nulla sapiente porro, unde vel illo.</caption>
+                            <img src="/pic.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="actions">
+                        <a href="" class="like">
+                            <i class="fa fa-heart"></i>
+                            <small>300</small>
+                        </a>
+
+
+                        <a href="" class="like">
+                            <i class="fa fa-share-alt-square"></i>
+                            <small>300</small>
+                        </a>
+
+                        <a href="" class="like">
+                            <i class="fa fa-bookmark"></i>
+                            <small>300</small>
+                        </a>
+
+                    </div>
+
+                    <div class="comment">
+                        <div class="message">
+                            <div class="account">
+                                <a href="">
+                                    <img src="/pic.jpg" alt="">
+                                    <div class="owner">
+                                        <div class="time">
+                                            <p>Display Name</p>
+                                        </div>
+                                 </a>
+                                        <div class="smal">
+                                            <small>•</small>
+                                            <small>Just now</small>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <p class="msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus?</p>
+                        </div>
+                           
+                        <div class="message">
+                            <div class="account">
+                                <a href="">
+                                    <img src="/pic.jpg" alt="">
+                                    <div class="owner">
+                                        <div class="time">
+                                            <p>Display Name</p>
+                                        </div>
+                                 </a>
+                                        <div class="smal">
+                                            <small>•</small>
+                                            <small>Just now</small>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <p class="msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus?</p>
+                        </div>
+                    </div>
+                    <div class="view">
+                        <a href="#">View all comments</a>
+                    </div>
+                </div>
+                <div class="cards">
+                    <div class="account">
+                        <a href="">
+                            <img src="/img.jpg" alt="">
+                            <div class="owner">
+                                <div class="time">
+                                    <p>Display Name</p>
+                                    <small>@username</small>
+                                </div>
+                         </a>
+                                <div class="smal">
+                                    <small>•</small>
+                                    <small>Just now</small>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="content">
+                        <a href="#">
+                            <caption>Lorem ipsum dolor sit amet consectetur adipisicing elit.</caption>
+                            <img src="/img.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="actions">
+                        <a href="" class="like">
+                            <i class="fa fa-heart"></i>
+                            <small>300</small>
+                        </a>
+
+
+                        <a href="" class="like">
+                            <i class="fa fa-share-alt-square"></i>
+                            <small>300</small>
+                        </a>
+
+                        <a href="" class="like">
+                            <i class="fa fa-bookmark"></i>
+                            <small>300</small>
+                        </a>
+                    </div>
+                </div>
+                
+           </div>
+        </div>
+
+
+
+
+        <div class="left">
+            <div class="trendcont">
+                <p class="head">Trending Now</p>
+                <a href="#" class="trends">
+                    <p>#themanisgo</p>
+                    <small>0 post</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#debee</p>
+                    <small>100 posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#obiri</p>
+                    <small>1k posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#NUNA</p>
+                    <small>400 posts</small>
+                </a>
+                <a href="#" class="trends">
+                    <p>#nuama</p>
+                    <small>95 posts</small>
+                </a>
+
+                <div class="views">
+                    <a href="#">View all</a>
+                </div>
+            </div>
+
+
+            <div class="people">
+                <p class="head">People you may know</p>
+                
+                <div>
+                    <a href="" class="users">
+                        <img src="/img.jpg" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                <p>Display Name</p>
+                                <small>@username</small>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="users">
+                        <img src="/img.jpg" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                <p>Display Name</p>
+                                <small>@username</small>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="users">
+                        <img src="/img.jpg" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                <p>Display Name</p>
+                                <small>@username</small>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="users">
+                        <img src="/img.jpg" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                <p>Display Name</p>
+                                <small>@username</small>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="users">
+                        <img src="/img.jpg" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                <p>Display Name</p>
+                                <small>@username</small>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="users">
+                        <img src="/img.jpg" alt="">
+                        <div class="owner">
+                            <div class="time">
+                                <p>Display Name</p>
+                                <small>@username</small>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="views">
+                        <a href="#">View all</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var drop = document.querySelector("nav");
+        function Drop(){
+            drop.classList.toggle("nav_show")
+        }
+    </script>
+</body>
+</html>

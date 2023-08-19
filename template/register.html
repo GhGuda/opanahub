@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpanaHub</title>
+    <link rel="stylesheet" href="{% static 'css/reg.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="head">Welcome to OpanaHub</div>
+        <form action="" method="post" autocomplete="off" autocapitalize="off">
+            {% csrf_token %}
+            <div class="input-sec">
+                <span class="name">Username</span>
+                <input type="text" name="username" placeholder="Enter Username">
+            </div>
+            <div class="input-sec">
+                <span class="name">Email</span>
+                <input type="email" name="email" placeholder="Enter Email">
+            </div>
+            <div class="input-sec">
+                <span class="name">Password</span>
+                <input type="password" name="password" placeholder="Enter Password">
+            </div>
+            <div class="input-sec">
+                <span class="name">Retype Password</span>
+                <input type="password" name="password2" placeholder="Retype Password">
+            </div>
+
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+
+            <input type="submit" class="btn" value="Register">
+        </form>
+
+        <div class="ask">
+            <p>Already have an account? <a href="{% url "index" %}">Login</a>.</p>
+        </div>
+    </div>
+
+</body>
+</html>

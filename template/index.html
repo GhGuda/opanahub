@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpanaHub</title>
+    <link rel="stylesheet" href="{% static 'css/reg.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="head">Login to OpanaHub</div>
+        <form action="" method="post" autocomplete="off" autocapitalize="off">
+            {% csrf_token %}
+            <div class="input-sec">
+                <span class="name">Username</span>
+                <input type="text" name="username" placeholder="Enter Username">
+            </div>
+            
+            <div class="input-sec">
+                <span class="name">Password</span>
+                <input type="password" name="password" placeholder="Enter Password">
+            </div>
+            
+
+            {% for msg in messages %}
+                <p>{{msg}} or <a href="register" style="color: rgba(76, 4, 128, 0.829);">Register</a>!</p>
+            {% endfor %}
+
+
+            <input type="submit" class="btn" value="Login">
+        </form>
+
+        <div class="ask">
+            <p>Don't have an account? <a href="{% url 'register' %}">Register</a>.</p>
+            <p class="forgot">Forgot password? <a href="{% url 'reset' %}">Reset</a>.</p>
+        </div>
+        <div class="asked">
+        </div>
+        
+    </div>
+
+</body>
+</html>
