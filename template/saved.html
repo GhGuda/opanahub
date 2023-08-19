@@ -265,9 +265,9 @@
                     {% endif %}
                 {% else %}
                     {% if request.user == profile.user %}
-                        <p style="text-align: center; font-size: 1.3rem;">No post saved</p>
+                        <p style="text-align: center; font-size: 1.3rem;">No pana saved</p>
                     {% else %}
-                        <p style="text-align: center; font-size: 1.3rem;">{{profile.display_name}} has not saved any post.</p>
+                        <p style="text-align: center; font-size: 1.3rem;">{{profile.display_name}} has not saved any pana.</p>
                     {% endif %}
                 {% endif %}
 
@@ -297,31 +297,63 @@
                 <div class="content">
                     <a href="/pana_details/{{posts.post.post_id}}">
                         <caption>{{posts.post.caption|truncatewords:20}}</caption>
-                        <img src="{{posts.post.image.url}}" alt="">
+                        {{posts.post.display_image|safe}}
                     </a>
                 </div>
+
                 <div class="actions">
-                    <a href="{% url 'likethissinyo' profile.user %}?post_id={{posts.post.post_id}}" class="like">
+                    {% if posts.post.liked == True %}
+                    <a id="myAnchor" href="{% url 'likethissinyou' profile.user %}?post_id={{posts.post.post_id}}" class="like">
                         <i class="fa fa-heart"></i>
                         <small>{{posts.post.likes}}</small>
                     </a>
+                    {% else %}
+                    <a id="myAnchor" href="{% url 'likethissinyou' profile.user %}?post_id={{posts.post.post_id}}" class="like">
+                        <i class="fa-regular fa-heart"></i>
+                        <small>{{posts.post.likes}}</small>
+                    </a>
+                    {% endif %}
+                    
 
 
-                    <a href="" class="like">
-                        <i class="fa fa-share-alt-square"></i>
-                        <small>300</small>
+                    <a id="myAnchor" class="like">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <small>{{posts.post.shares}}</small>
                     </a>
 
-                    <a href="{% url 'pana_details' posts.post.post_id %}" class="like">
-                        <i class="fa fa-comment-alt"></i>
+                    <a id="myAnchor" href="{% url 'pana_details' posts.post.post_id %}" class="like">
+                        <i class="fa-regular fa-comment"></i>
                         <small>{{posts.post.comments}}</small>
                     </a>
 
-                    <a href="{% url 'savedthissinyo' profile.user %}?post_id={{posts.post.post_id}}" class="like">
+                    {% if posts.post.sav == True  %}
+                    <a id="myAnchor" href="{% url 'savedthissinyou' profile.user %}?post_id={{posts.post.post_id}}" class="like">
                         <i class="fa fa-bookmark"></i>
                         <small>{{posts.post.saved}}</small>
                     </a>
+                    {% else %}
+                    <a id="myAnchor" href="{% url 'savedthissinyou' profile.user %}?post_id={{posts.post.post_id}}" class="like">
+                        <i class="fa-regular fa-bookmark"></i>
+                        <small>{{posts.post.saved}}</small>
+                    </a>
+                    {% endif %}
 
+                    {% if posts.post.profile.user == profile.user %}
+                    <a href="{% url 'delthiss' posts.post.post_id profile.user %}" class="like">
+                        <i class="fa fa-trash"></i>
+                    </a>
+
+                    {% if posts.post.edited == True %}
+                    <a href="{% url 'edit' posts.post.post_id %}" style="color:red;" class="like">
+                        <i class="fa fa-fas fa-edit"></i>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'edit' posts.post.post_id %}" class="like">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                    
                 </div>
             </div>
             {% endfor %}

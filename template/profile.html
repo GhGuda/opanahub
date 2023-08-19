@@ -283,43 +283,66 @@
                 <div class="content">
                     <a href="/pana_details/{{posts.post_id}}">
                         <caption>{{posts.caption|truncatewords:20}}</caption>
-                        <img src="{{posts.image.url}}" alt="">
+                        {{posts.display_image|safe}}
                     </a>
                 </div>
+
                 <div class="actions">
-                    <a href="{% url 'likethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                    {% if posts.liked == True %}
+                    <a id="myAnchor" href="{% url 'likethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
                         <i class="fa fa-heart"></i>
                         <small>{{posts.likes}}</small>
                     </a>
+                    {% else %}
+                    <a id="myAnchor" href="{% url 'likethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                        <i class="fa-regular fa-heart"></i>
+                        <small>{{posts.likes}}</small>
+                    </a>
+                    {% endif %}
+                    
 
 
-                    <a href="" class="like">
-                        <i class="fa fa-share-alt-square"></i>
-                        <small>{{posts.share}}</small>
+                    <a id="myAnchor" class="like">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <small>{{posts.shares}}</small>
                     </a>
 
-                    <a href="{% url 'pana_details' posts.post_id %}" class="like">
-                        <i class="fa fa-comment-alt"></i>
+                    <a id="myAnchor" class="like">
+                        <i class="fa-regular fa-comment"></i>
                         <small>{{posts.comments}}</small>
                     </a>
 
-                    <a href="{% url 'savethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                    {% if posts.sav == True  %}
+                    <a id="myAnchor" href="{% url 'savethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
                         <i class="fa fa-bookmark"></i>
                         <small>{{posts.saved}}</small>
                     </a>
-
+                    {% else %}
+                    <a id="myAnchor" href="{% url 'savethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                        <i class="fa-regular fa-bookmark"></i>
+                        <small>{{posts.saved}}</small>
+                    </a>
+                    {% endif %}
 
                     {% if posts.profile.user == profile.user %}
                     <a href="{% url 'delthiss' posts.post_id profile.user %}" class="like">
                         <i class="fa fa-trash"></i>
                     </a>
 
-                    
-                    <a href="{% url 'edit' posts.post_id %}" class="like">
+                    {% if posts.edited == True %}
+                    <a href="{% url 'edit' posts.post_id %}" style="color:red;" class="like">
                         <i class="fa fa-fas fa-edit"></i>
                     </a>
+                    {% else %}
+                    <a href="{% url 'edit' posts.post_id %}" class="like">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
                     {% endif %}
+                    {% endif %}
+                    
                 </div>
+
+
             </div>
             {% endfor %}
         </div>           

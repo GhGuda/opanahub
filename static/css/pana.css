@@ -423,8 +423,19 @@ form button{
     color: var(--accent-color);
     font-size: 1.5rem;
     cursor: pointer;
-    cursor: pointer;
     transition: .4s;
+}
+
+
+.cancel{
+    background: var(--bg-color);
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    height: 4rem;
+    text-align: center;
+    border-radius: 1rem;
+    line-height: 4rem;
 }
 
 
@@ -568,7 +579,7 @@ form button{
 
 /* ---------------------------------------------------Not Needed on big screens------------------------------------------ */
 
-.pana, nav, .lis, .yie{
+.pana, .panaa, nav, .lis, .yie{
     display: none;
 }
 
@@ -853,6 +864,23 @@ form button{
         align-items: center;
     }
 
+    .panaa{
+        display: flex;
+        position: fixed;
+        bottom: 25%;
+        left: 51%;
+        z-index: 100;
+        background: var(--bg-color);
+        padding: .5rem;
+        border-radius: 50%;
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        height: 3rem;
+        width: 3rem;
+        justify-content: center;
+        align-items: center;
+    }
+
 
     .user{
         background: var(--accent-color);
@@ -1064,6 +1092,10 @@ form button{
     }
 
     .pana{
+        left: 86%;
+    }
+
+    .panaa{
         left: 86%;
     }
 

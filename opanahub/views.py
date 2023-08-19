@@ -18,6 +18,10 @@ from django.utils.http import urlsafe_base64_encode
 from bs4 import BeautifulSoup
 
 
+# time re tiue irutu poeirt iwr tiopwitw
+from datetime import timezone, timedelta
+from django.utils.timesince import timesince
+
 # Create your views here.
 
 
@@ -132,51 +136,34 @@ def password_reset_request(request):
 
 
 
-    
 @login_required(login_url=index)
 def frontpage(request):
     user_obj = User.objects.get(username=request.user)
     get_profile = Profile.objects.get(user=user_obj)
     logged_in_user = request.user
-    # Like_pos = Like_post.objects.all()
-    
-    
 
-    if request.method == "POST":
-        query = request.get("query")
-        if query:
-            pass
-
-    # if logged_in_user.is_authenticated and logged_in_user.profile == profile:
-    #     prof_sug = list(Profile.objects.exclude(user=user_pro))
-    # else:
-    #     prof_sug = list(Profile.objects.exclude(user=user_obj.user))
-
-    # random.shuffle(prof_sug)
-
-    # suggested_profile = prof_sug[:4]
-    
+    # if request.method == "POST":
+    #     query = request.get("query")
+    #     if query:
+    #         pass
 
     posts = Posts.objects.all()
     
-    for items in posts:
-        post_id=items.post_id
-        
-        Like_pos = Like_post.objects.filter(post_id=post_id)
+    for post in posts:
+        comments = Comment.objects.filter(post=post).order_by('created_on')[:2]
+        post.comments = comments
 
-    context ={
+
+    context = {
         "profile": get_profile,
         "post": posts,
-        # "suggested_profile": suggested_profiles,
-        # "post_comments": post_comments,
-        "Like_post": Like_pos,
     }
 
     return render(request, "frontpage.html", context)
 
 
 
-
+@login_required(login_url=index)
 def edit(request, pana):
     post = Posts.objects.get(post_id=pana)
     get_profile = Profile.objects.get(user__username=request.user)
@@ -194,6 +181,7 @@ def edit(request, pana):
             post.trends=new_trends
             post.image=upload
             post.profile=user
+            post.edited = True
             post.save()
             return redirect('frontpage')
         
@@ -209,6 +197,7 @@ def edit(request, pana):
             post.trends=new_trends
             post.image=upload
             post.profile=user
+            post.edited = True
             post.save()
             return redirect('frontpage')
         
@@ -222,7 +211,7 @@ def edit(request, pana):
 
 
 
-
+@login_required(login_url=index)
 def delpost(request, pana):
     post = Posts.objects.get(post_id=pana)
     post.delete()
@@ -343,22 +332,6 @@ def addup(request):
             new_follower.save()
             return redirect("follower", userprofile)
 
-
-
-# def f4f(request, userad):
-#     following = User.objects.get(username=userad)
-#     user = User.objects.get(username=request.user)
-    
-#     followingPP = Profile.objects.get(user=following)
-#     userProfile = Profile.objects.get(user=user)
-    
-    
-#     if Follow.objects.filter(user=userProfile, following=followingPP):
-#         add_follower = Follow.objects.create(user=userProfile, following=followingPP)
-#         add_follower.save()
-    
-#     return redirect("follower", userad)
-
         
         
 
@@ -469,12 +442,14 @@ def savethis(request):
         new_save = Save.objects.create(post=posts, user=get_profile)
         new_save.save()
         posts.saved +=1
+        posts.sav = True
         posts.save()
         return redirect('frontpage')
     
     else:
         post_save.delete()
         posts.saved -=1
+        posts.sav = False
         posts.save()
         return redirect('frontpage')
 
@@ -494,12 +469,14 @@ def savethiss(request):
         new_save = Save.objects.create(post=posts, user=get_profile)
         new_save.save()
         posts.saved +=1
+        posts.sav = True
         posts.save()
         return redirect(pana_details, post_id)
     
     else:
         post_save.delete()
         posts.saved -=1
+        posts.sav = False
         posts.save()
         return redirect(pana_details, post_id)
 
@@ -522,12 +499,14 @@ def savethissinprofile(request, user):
         new_save = Save.objects.create(post=posts, user=get_profile)
         new_save.save()
         posts.saved +=1
+        posts.sav = True
         posts.save()
         return redirect(profile, visit_profile)
     
     else:
         post_save.delete()
         posts.saved -=1
+        posts.sav = False
         posts.save()
         return redirect(profile, visit_profile)
     
@@ -549,12 +528,43 @@ def savedthissinyo(request, user):
         new_save = Save.objects.create(post=posts, user=get_profile)
         new_save.save()
         posts.saved +=1
+        posts.sav = True
+        posts.save()
+        return redirect(userliked, visit_profile)
+    
+    else:
+        post_save.delete()
+        posts.saved -=1
+        posts.sav = False
+        posts.save()
+        return redirect(userliked, visit_profile)
+    
+    
+@login_required(login_url=index)
+def savedthissinyou(request, user):
+    user_obj = User.objects.get(username=request.user)
+    get_profile = Profile.objects.get(user=user_obj)
+    post_id = request.GET.get("post_id")
+
+    u = User.objects.get(username=user)
+    visit_profile = Profile.objects.get(user=u)
+
+    posts = Posts.objects.get(post_id=post_id)
+
+    post_save = Save.objects.filter(post=posts, user=get_profile).first()
+
+    if post_save == None:
+        new_save = Save.objects.create(post=posts, user=get_profile)
+        new_save.save()
+        posts.saved +=1
+        posts.sav = True
         posts.save()
         return redirect(savedpost, visit_profile)
     
     else:
         post_save.delete()
         posts.saved -=1
+        posts.sav = False
         posts.save()
         return redirect(savedpost, visit_profile)
 
@@ -622,12 +632,14 @@ def likethis(request):
         new_like = Like_post.objects.create(post=posts, user=get_profile)
         new_like.save()
         posts.likes +=1
+        posts.liked = True
         posts.save()
         return redirect('frontpage')
     
     else:
         post_like.delete()
         posts.likes -=1
+        posts.liked = False
         posts.save()
         return redirect('frontpage')
 
@@ -646,12 +658,14 @@ def likethiss(request):
         new_like = Like_post.objects.create(post=posts, user=get_profile)
         new_like.save()
         posts.likes +=1
+        posts.liked = True
         posts.save()
         return redirect(pana_details, post_id)
     
     else:
         post_like.delete()
         posts.likes -=1
+        posts.liked = False
         posts.save()
         return redirect(pana_details, post_id)
     
@@ -672,12 +686,14 @@ def likethissinprofile(request, user):
         new_like = Like_post.objects.create(post=posts, user=get_profile)
         new_like.save()
         posts.likes +=1
+        posts.liked = True
         posts.save()
         return redirect(profile, visit_profile)
     
     else:
         post_like.delete()
         posts.likes -=1
+        posts.liked = False
         posts.save()
         return redirect(profile, visit_profile)
     
@@ -698,14 +714,45 @@ def likethissinyo(request, user):
         new_like = Like_post.objects.create(post=posts, user=get_profile)
         new_like.save()
         posts.likes +=1
+        posts.liked = True
         posts.save()
         return redirect(userliked, visit_profile)
     
     else:
         post_like.delete()
         posts.likes -=1
+        posts.liked = False
         posts.save()
         return redirect(userliked, visit_profile)
+    
+    
+@login_required(login_url=index)
+def likethissinyou(request, user):
+    user_obj = User.objects.get(username=request.user)
+    get_profile = Profile.objects.get(user=user_obj)
+    post_id = request.GET.get("post_id")
+
+    u = User.objects.get(username=user)
+    visit_profile = Profile.objects.get(user=u)
+
+    posts = Posts.objects.get(post_id=post_id)
+
+    post_like = Like_post.objects.filter(post=posts, user=get_profile).first()
+
+    if post_like == None:
+        new_like = Like_post.objects.create(post=posts, user=get_profile)
+        new_like.save()
+        posts.likes +=1
+        posts.liked = True
+        posts.save()
+        return redirect(savedpost, visit_profile)
+    
+    else:
+        post_like.delete()
+        posts.likes -=1
+        posts.liked = False
+        posts.save()
+        return redirect(savedpost, visit_profile)
 
 @login_required(login_url=index)
 def userliked(request, user):
@@ -783,19 +830,8 @@ def pana(request):
         new_trends.save()
         return redirect('frontpage')
         
-    
-    # if logged_in_user.is_authenticated and logged_in_user.profile == profile:
-    #     prof_sug = list(Profile.objects.exclude(user=user_pro))
-    # else:
-    #     prof_sug = list(Profile.objects.exclude(user=user_obj.user))
-
-    # random.shuffle(prof_sug)
-
-    # suggested_profile = prof_sug[:4]
-
     context ={
         "profile": get_profile,
-        # "suggested_profile": suggested_profile,
     }
 
     return render(request, "pana.html", context)
@@ -865,11 +901,14 @@ def likecomment(request, post_id):
     if check_like == None:
         new_like = Like_comment.objects.create(user=get_profile, comment_id=comment_id)
         comment.likes += 1
+        comment.liked = True
         comment.save()
+        
         new_like.save()
     else:
         check_like.delete()
         comment.likes -= 1
+        comment.liked = False
         comment.save()
 
     

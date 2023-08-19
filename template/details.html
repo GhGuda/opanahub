@@ -163,18 +163,7 @@
                 </nav>
            </div>
 
-           <!-- <a href="" class="pana">
-                <i class="fa fas fa-pen-fancy"></i>
-            </a> -->
-            <!-- <div class="formcont">
-                <form action="" method="post">
-                    lorem5100
-                    <div class="medd">
-                        <textarea name="body" id=""></textarea>
-                        <button type="submit" class="textbtn">Send</button>
-                    </div>
-                </form>
-            </div>  -->
+           
 
             
            <div class="card">
@@ -200,42 +189,65 @@
                     <div class="content">
                         <a>
                             <caption>{{posts.caption}}</caption>
-                            <img src="{{posts.image.url}}" alt="">
+                           <div class="file-display">
+                                {{ posts.display_image|safe }}
+                            </div>
                         </a>
                     </div>
+
                     <div class="actions">
+                        {% if posts.liked == True %}
                         <a id="myAnchor" href="{% url 'likethiss' %}?post_id={{posts.post_id}}" class="like">
                             <i class="fa fa-heart"></i>
                             <small>{{posts.likes}}</small>
                         </a>
+                        {% else %}
+                        <a id="myAnchor" href="{% url 'likethiss' %}?post_id={{posts.post_id}}" class="like">
+                            <i class="fa-regular fa-heart"></i>
+                            <small>{{posts.likes}}</small>
+                        </a>
+                        {% endif %}
+                        
 
 
                         <a id="myAnchor" class="like">
-                            <i class="fa fa-share-alt-square"></i>
+                            <i class="fa-solid fa-share-nodes"></i>
                             <small>{{posts.shares}}</small>
                         </a>
 
-                        <a id="myAnchor" href="" class="like">
-                            <i class="fa fa-far fa-comment-alt"></i>
+                        <a id="myAnchor" class="like">
+                            <i class="fa-regular fa-comment"></i>
                             <small>{{posts.comments}}</small>
                         </a>
 
+                        {% if posts.sav == True  %}
                         <a id="myAnchor" href="{% url 'savethiss' %}?post_id={{posts.post_id}}" class="like">
                             <i class="fa fa-bookmark"></i>
                             <small>{{posts.saved}}</small>
                         </a>
+                        {% else %}
+                        <a id="myAnchor" href="{% url 'savethiss' %}?post_id={{posts.post_id}}" class="like">
+                            <i class="fa-regular fa-bookmark"></i>
+                            <small>{{posts.saved}}</small>
+                        </a>
+                        {% endif %}
 
                         {% if posts.profile.user == profile.user %}
                         <a href="{% url 'delpost' posts.post_id %}" class="like">
                             <i class="fa fa-trash"></i>
                         </a>
 
-                        
-                        <a href="{% url 'edit' posts.post_id %}" class="like">
+                        {% if posts.edited == True %}
+                        <a href="{% url 'edit' posts.post_id %}" style="color:red;" class="like">
                             <i class="fa fa-fas fa-edit"></i>
                         </a>
+                        {% else %}
+                        <a href="{% url 'edit' posts.post_id %}" class="like">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </a>
                         {% endif %}
-
+                        {% endif %}
+                        
                     </div>
                 </div>
 
@@ -278,20 +290,26 @@
                     
                                 <div class="act">
                                     {% if posts.profile.user == request.user %}
-                                    <a id="myAnchor" href="{% url 'comment_del' comments.comment_id posts.post_id %}">
+                                    <a id="" href="{% url 'comment_del' comments.comment_id posts.post_id %}">
                                         <i class="fa fa-trash-alt"></i>
                                     </a>
                                     {% elif comments.user.user == request.user %}
-                                    <a id="myAnchor" href="{% url 'comment_del' comments.comment_id posts.post_id %}">
+                                    <a id="" href="{% url 'comment_del' comments.comment_id posts.post_id %}">
                                         <i class="fa fa-trash-alt"></i>
                                     </a>
                                     {% endif %}
 
-                                    
+                                    {% if comments.liked == True %}
                                     <a id="myAnchor" href="{% url 'likecomment' posts.post_id %}?comment_id={{comments.comment_id}} ">
                                         <i class="fa fa-heart"></i>
                                         <small>{{comments.likes}}</small>
                                     </a>
+                                    {% else %}
+                                    <a id="myAnchor" href="{% url 'likecomment' posts.post_id %}?comment_id={{comments.comment_id}} ">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <small>{{comments.likes}}</small>
+                                    </a>
+                                    {% endif %}
                                 </div>
                             </div>
     

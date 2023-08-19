@@ -17,6 +17,7 @@ urlpatterns = [
     path('savethiss', views.savethiss, name="savethiss"),
     path('savethissinprofile/<user>', views.savethissinprofile, name="savethissinprofile"),
     path('savedthissinyo/<user>', views.savedthissinyo, name="savedthissinyo"),
+    path('savedthissinyou/<user>', views.savedthissinyou, name="savedthissinyou"),
 
 
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path('likethiss', views.likethiss, name="likethiss"),
     path('likethissinprofile/<user>', views.likethissinprofile, name="likethissinprofile"),
     path('likethissinyo/<user>', views.likethissinyo, name="likethissinyo"),
+    path('likethissinyou/<user>', views.likethissinyou, name="likethissinyou"),
     path('pana_details/<post_id>', views.pana_details, name="pana_details"),
     path('edit/<pana>', views.edit, name="edit"),
     path('delpost/<pana>', views.delpost, name="delpost"),

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from django.utils.html import format_html
 
 # Create your models here.
 
@@ -42,18 +43,31 @@ class Trend(models.Model):
 class Posts(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post_id = models.UUIDField(default=uuid.uuid4)
-    image = models.ImageField(upload_to='post_images', blank=True, null=True)
+    image = models.FileField(upload_to='post_images', blank=True, null=True)
     caption = models.TextField()
     trends = models.ForeignKey(Trend, on_delete=models.CASCADE, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
+    liked = models.BooleanField(default=False)
     shares = models.IntegerField(default=0)
     saved = models.IntegerField(default=0)
+    sav = models.BooleanField(default=False)
     comments = models.IntegerField(default=0)
-    schedule = models.DateTimeField(auto_now_add=False, null=True)
+    edited = models.BooleanField(default=False)
     
     def __str__(self):
        return f"{self.profile.user.username.upper()} posted {self.caption}"
+    
+    
+    def display_image(self):
+        if self.image:
+            if self.image.url.endswith(('.mp4', '.avi', '.mov')):
+                return format_html('<video controls width="100%" src="{}"></video>', self.image.url)
+            else:
+                return format_html('<img src="{}" alt="Post File" height="auto" />', self.image.url)
+        return ""
+    
+    
     
     class Meta:
         verbose_name_plural = 'Post'
@@ -94,6 +108,8 @@ class Comment(models.Model):
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
+    liked = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return f"{self.user.user.username.upper()} commented on {self.post}"
@@ -105,7 +121,6 @@ class Comment(models.Model):
 class Like_comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     comment_id = models.TextField()
-
     def __str__(self):
         return f"{self.user.user.username.upper()} liked {self.comment_id}"
     

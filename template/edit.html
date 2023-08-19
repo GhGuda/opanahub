@@ -170,10 +170,12 @@
                 {% csrf_token %}
                 <textarea name="caption" placeholder="Caption">{{post.caption}}</textarea>
                 <input type="text" name="tag" placeholder="#hashtag">
-                <input type="file" name="upload" id="" accept="image/*">
-                <small>Current Image:</small>
-                <img src="{{post.image.url}}" class="showimg">
+                <input type="file" name="upload" id="" accept="image/*,video/*" >
+                <small>Current File:</small>
+                {% comment %} <!-- <img src="{{post.image.url}}" class="showimg"> --> {% endcomment %}
+                {{ post.display_image|safe }}
                 <input class="input" type="submit" value="Update">
+                <a href="/frontpage" class="cancel">Cancel</a>
             </form>
           </div>
            
