@@ -243,8 +243,7 @@ def onlyFollowing(request):
 def profile(request, user):
     user_obj = User.objects.get(username=user)
     profile =  Profile.objects.get(user=user_obj)
-    post = Posts.objects.filter(profile=profile)
-    likes = Like_post.objects.filter(user=profile)
+    postt = Posts.objects.filter(profile=profile)
     user_obj = Profile.objects.get(user=request.user)
     logged_in_user = request.user
 
@@ -259,26 +258,21 @@ def profile(request, user):
     profile_visited_followers = len(Follow.objects.filter(user=profile))
     profile_visited_following = len(Follow.objects.filter(following=profile))
 
+    total_likes = 0  
 
-    # if logged_in_user.is_authenticated and logged_in_user.profile == profile:
-    #     prof_sug = list(Profile.objects.exclude(user=user_pro))
-    # else:
-    #     prof_sug = list(Profile.objects.exclude(user=user_obj.user))
-
-    # random.shuffle(prof_sug)
-
-    # suggested_profile = prof_sug[:4]
+    for post in postt:
+        total_likes += post.likes
 
     context ={
         "profile": profile,
         "user_obj": user_obj,
-        "post": post,
+        "post": postt,
         "switch": switch,
         "profile_visited_followers": profile_visited_followers,
         "profile_visited_following": profile_visited_following,
         # "suggested_profile": suggested_profile,
         # "post_comments": post_comments,
-        # "likes": likes,  # Add the list of post_ids to the context
+        "likes": total_likes,
     }
 
     return render(request, "profile.html", context)

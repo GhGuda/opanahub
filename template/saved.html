@@ -178,14 +178,18 @@
            
            <div class="formm">
                 <div class="backimg">
-                    <img class="back" src="{{profile.back_img.url}}" alt="">
+                    <a href="{{profile.back_img.url}}">
+                        <img class="back" src="{{profile.back_img.url}}" alt="">
+                    </a>
                     <!-- <div class="imgg">
                         <input class="input" type="file" name="" id="">
                         <img src="/kindpng_7945427.png" alt="">
                     </div> -->
 
                     <div class="profileimg">
-                        <img class="prof" src="{{profile.profile_img.url}}" alt="">
+                        <a href="{{profile.profile_img.url}}">
+                            <img class="prof" src="{{profile.profile_img.url}}" alt="">
+                        </a>
                         <!-- <div class="imggg">
                             <input class="input" type="file" name="" id="">
                             <img src="/kindpng_7945427.png" alt="">
@@ -265,9 +269,13 @@
                     {% endif %}
                 {% else %}
                     {% if request.user == profile.user %}
-                        <p style="text-align: center; font-size: 1.3rem;">No pana saved</p>
+                        <p style="text-align: center; font-size: 1.3rem;">No Pana saved</p>
                     {% else %}
-                        <p style="text-align: center; font-size: 1.3rem;">{{profile.display_name}} has not saved any pana.</p>
+                    {% if profile.display_name %}
+                        <p style="text-align: center; font-size: 1.3rem;">{{profile.display_name|capfirst}} have not saved any Pana.</p>
+                    {% else %}
+                        <p style="text-align: center; font-size: 1.3rem;">{{profile.user|capfirst}} have not saved any Pana.</p>
+                    {% endif %}
                     {% endif %}
                 {% endif %}
 

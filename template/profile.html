@@ -97,6 +97,7 @@
                         {% else %}
                             <small>{{post.count}} Panas</small>
                         {% endif %}
+                        likes {{likes}}
                     </div>
                 <!-- </form> -->
                 <div class="lis">
@@ -177,14 +178,18 @@
            
            <div class="formm">
                 <div class="backimg">
-                    <img class="back" src="{{profile.back_img.url}}" alt="">
+                    <a href="{{profile.back_img.url}}">
+                        <img class="back" src="{{profile.back_img.url}}" alt="">
+                    </a>
                     <!-- <div class="imgg">
                         <input class="input" type="file" name="" id="">
                         <img src="/kindpng_7945427.png" alt="">
                     </div> -->
 
                     <div class="profileimg">
-                        <img class="prof" src="{{profile.profile_img.url}}" alt="">
+                        <a href="{{profile.profile_img.url}}">
+                            <img class="prof" src="{{profile.profile_img.url}}" alt="">
+                        </a>
                         <!-- <div class="imggg">
                             <input class="input" type="file" name="" id="">
                             <img src="/kindpng_7945427.png" alt="">
@@ -260,91 +265,97 @@
                 <a href="{% url 'userliked' profile.user %}">Liked</a>
                 <a href="{% url 'savedpost' profile.user %}">Saved</a>
             </div>
-            {% for posts in post reversed %}
-            <div class="cards">
-                <div class="account">
-                    <a>
-                        <img src="{{posts.profile.profile_img.url}}" alt="">
-                        <div class="owner">
-                            <div class="time">
-                                {% if posts.profile.display_name %}
-                                <p>{{posts.profile.display_name|truncatechars:"15"}}</p>
-                                {% endif %}
-                                <small>@{{posts.profile.user|lower|truncatechars:"15"}}</small>
+
+            {% if post %}
+                
+                {% for posts in post reversed %}
+                <div class="cards">
+                    <div class="account">
+                        <a>
+                            <img src="{{posts.profile.profile_img.url}}" alt="">
+                            <div class="owner">
+                                <div class="time">
+                                    {% if posts.profile.display_name %}
+                                    <p>{{posts.profile.display_name|truncatechars:"15"}}</p>
+                                    {% endif %}
+                                    <small>@{{posts.profile.user|lower|truncatechars:"15"}}</small>
+                                </div>
+                        </a>
+                                <div class="smal">
+                                    <small>•</small>
+                                    <small>{{posts.created_on|naturaltime}}</small>
+                                </div>
                             </div>
-                     </a>
-                            <div class="smal">
-                                <small>•</small>
-                                <small>{{posts.created_on|naturaltime}}</small>
-                            </div>
-                        </div>
+                    </div>
+
+                    <div class="content">
+                        <a href="/pana_details/{{posts.post_id}}">
+                            <caption>{{posts.caption|truncatewords:20}}</caption>
+                            {{posts.display_image|safe}}
+                        </a>
+                    </div>
+
+                    <div class="actions">
+                        {% if posts.liked == True %}
+                        <a id="myAnchor" href="{% url 'likethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                            <i class="fa fa-heart"></i>
+                            <small>{{posts.likes}}</small>
+                        </a>
+                        {% else %}
+                        <a id="myAnchor" href="{% url 'likethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                            <i class="fa-regular fa-heart"></i>
+                            <small>{{posts.likes}}</small>
+                        </a>
+                        {% endif %}
+                        
+
+
+                        <a id="myAnchor" class="like">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <small>{{posts.shares}}</small>
+                        </a>
+
+                        <a id="myAnchor" class="like">
+                            <i class="fa-regular fa-comment"></i>
+                            <small>{{posts.comments}}</small>
+                        </a>
+
+                        {% if posts.sav == True  %}
+                        <a id="myAnchor" href="{% url 'savethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                            <i class="fa fa-bookmark"></i>
+                            <small>{{posts.saved}}</small>
+                        </a>
+                        {% else %}
+                        <a id="myAnchor" href="{% url 'savethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
+                            <i class="fa-regular fa-bookmark"></i>
+                            <small>{{posts.saved}}</small>
+                        </a>
+                        {% endif %}
+
+                        {% if posts.profile.user == request.user %}
+                        <a href="{% url 'delthiss' posts.post_id profile.user %}" class="like">
+                            <i class="fa fa-trash"></i>
+                        </a>
+
+                        {% if posts.edited == True %}
+                        <a href="{% url 'edit' posts.post_id %}" style="color:red;" class="like">
+                            <i class="fa fa-fas fa-edit"></i>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'edit' posts.post_id %}" class="like">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                        
+                    </div>
+
+
                 </div>
-
-                <div class="content">
-                    <a href="/pana_details/{{posts.post_id}}">
-                        <caption>{{posts.caption|truncatewords:20}}</caption>
-                        {{posts.display_image|safe}}
-                    </a>
-                </div>
-
-                <div class="actions">
-                    {% if posts.liked == True %}
-                    <a id="myAnchor" href="{% url 'likethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
-                        <i class="fa fa-heart"></i>
-                        <small>{{posts.likes}}</small>
-                    </a>
-                    {% else %}
-                    <a id="myAnchor" href="{% url 'likethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
-                        <i class="fa-regular fa-heart"></i>
-                        <small>{{posts.likes}}</small>
-                    </a>
-                    {% endif %}
-                    
-
-
-                    <a id="myAnchor" class="like">
-                        <i class="fa-solid fa-share-nodes"></i>
-                        <small>{{posts.shares}}</small>
-                    </a>
-
-                    <a id="myAnchor" class="like">
-                        <i class="fa-regular fa-comment"></i>
-                        <small>{{posts.comments}}</small>
-                    </a>
-
-                    {% if posts.sav == True  %}
-                    <a id="myAnchor" href="{% url 'savethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
-                        <i class="fa fa-bookmark"></i>
-                        <small>{{posts.saved}}</small>
-                    </a>
-                    {% else %}
-                    <a id="myAnchor" href="{% url 'savethissinprofile' profile.user %}?post_id={{posts.post_id}}" class="like">
-                        <i class="fa-regular fa-bookmark"></i>
-                        <small>{{posts.saved}}</small>
-                    </a>
-                    {% endif %}
-
-                    {% if posts.profile.user == profile.user %}
-                    <a href="{% url 'delthiss' posts.post_id profile.user %}" class="like">
-                        <i class="fa fa-trash"></i>
-                    </a>
-
-                    {% if posts.edited == True %}
-                    <a href="{% url 'edit' posts.post_id %}" style="color:red;" class="like">
-                        <i class="fa fa-fas fa-edit"></i>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'edit' posts.post_id %}" class="like">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                    </a>
-                    {% endif %}
-                    {% endif %}
-                    
-                </div>
-
-
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; margin-top:2rem; font-size:1.5rem;">{{profile.user|capfirst}} have no post.</p>
+            {% endif %}
         </div>           
         </div>
 
