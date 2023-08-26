@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from .models import *
 from django.contrib.auth.decorators import login_required
 import random
+from django.db.models import Q
 
 # for password reset form customization
 
@@ -26,20 +27,23 @@ from django.utils.timesince import timesince
 
 
 def index(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        auth_user = auth.authenticate(username=username, password=password)
-
-        if auth_user is not None:
-            auth.login(request, auth_user)
-            return redirect('frontpage')
-        
-        else:
-            messages.error(request, "No identity matched, retry")
-            return redirect('index')
+    if User.is_authenticated:
+        return redirect(frontpage)
     else:
-        return render(request, "index.html")
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            auth_user = auth.authenticate(username=username, password=password)
+
+            if auth_user is not None:
+                auth.login(request, auth_user)
+                return redirect('frontpage')
+            
+            else:
+                messages.error(request, "No identity matched, retry")
+                return redirect('index')
+        else:
+            return render(request, "index.html")
 
 
 
@@ -216,6 +220,11 @@ def delpost(request, pana):
     post = Posts.objects.get(post_id=pana)
     post.delete()
     return redirect(frontpage)
+
+
+
+def search(request):
+    pass
 
 
 def delthiss(request, pana, user):
@@ -632,8 +641,8 @@ def likethis(request):
     
     else:
         post_like.delete()
-        posts.likes -=1
         posts.liked = False
+        posts.likes -=1
         posts.save()
         return redirect('frontpage')
 
@@ -983,3 +992,20 @@ def setting(request):
 
 
 
+
+def search(request):
+    profile =  Profile.objects.get(user=request.user)
+    if request.method == "POST":
+        param = request.POST['param']
+        context={}
+        if param:
+            users = Profile.objects.filter(Q(user__username__icontains=param) | Q(display_name__icontains=param))
+            posts = Posts.objects.filter(Q(caption__icontains=param))
+    context = {
+        'users': users,
+        'post': posts,
+        'profile': profile,
+        'param': param,
+    }
+
+    return render(request, "search.html", context)

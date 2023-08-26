@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('frontpage', views.frontpage, name="frontpage"),
     path('new_pana', views.pana, name="pana"),
+    path('search', views.search, name="search"),
     path('likethis', views.likethis, name="likethis"),
     path('likecomment/<post_id>', views.likecomment, name="likecomment"),
     path('likethiss', views.likethiss, name="likethiss"),
