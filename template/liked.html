@@ -93,13 +93,15 @@
                         {% if profile.display_name %}
                         <p class="ttt">{{profile.display_name}}</p>
                         {% endif %}
+                       
                         {% if post.count == 0 %}
-                            <small>{{post.count}} Pana</small>
+                            <small><b>{{post.count}}</b> Pana</small>
                         {% elif post.count == 1 %}
-                            <small>{{post.count}} Pana</small>
+                            <small><b>{{post.count}}</b> Pana</small>
                         {% else %}
-                            <small>{{post.count}} Panas</small>
+                            <small><b>{{post.count}}</b> Panas</small>
                         {% endif %}
+                        <small> <b>{{total_likes}}</b> likes</small>
                     </div>
                 <!-- </form> -->
                 <div class="lis">

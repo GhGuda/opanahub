@@ -89,15 +89,17 @@
                     <button type="submit">search</button> -->
 
                     <div class="covv">
+                        {% if profile.display_name %}
                         <p class="ttt">{{profile.display_name}}</p>
-                        {% if post.count == 0 %}
-                            <small>{{post.count}} Pana</small>
-                        {% elif post.count == 1 %}
-                            <small>{{post.count}} Pana</small>
-                        {% else %}
-                            <small>{{post.count}} Panas</small>
                         {% endif %}
-                        likes {{likes}}
+                        {% if post.count == 0 %}
+                            <small><b>{{post.count}}</b> Pana</small>
+                        {% elif post.count == 1 %}
+                            <small><b>{{post.count}}</b> Pana</small>
+                        {% else %}
+                            <small><b>{{post.count}}</b> Panas</small>
+                        {% endif %}
+                        <small> <b>{{likes}}</b> likes</small>
                     </div>
                 <!-- </form> -->
                 <div class="lis">

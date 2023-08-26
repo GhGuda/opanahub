@@ -27,7 +27,7 @@ from django.utils.timesince import timesince
 
 
 def index(request):
-    if User.is_authenticated:
+    if request.user.is_authenticated:
         return redirect(frontpage)
     else:
         if request.method == "POST":
@@ -576,7 +576,7 @@ def savedthissinyou(request, user):
 def savedpost(request, user):
     user_obj = User.objects.get(username=user)
     profile =  Profile.objects.get(user=user_obj)
-    post = Posts.objects.filter(profile=profile)
+    postt = Posts.objects.filter(profile=profile)
     user_obj = Profile.objects.get(user=request.user)
     saved = Save.objects.filter(user=profile).order_by("-post__likes")
     logged_in_user = request.user
@@ -593,14 +593,11 @@ def savedpost(request, user):
     profile_visited_following = len(Follow.objects.filter(following=profile))
 
 
-    # if logged_in_user.is_authenticated and logged_in_user.profile == profile:
-    #     prof_sug = list(Profile.objects.exclude(user=user_pro))
-    # else:
-    #     prof_sug = list(Profile.objects.exclude(user=user_obj.user))
+    total_likes = 0  
 
-    # random.shuffle(prof_sug)
+    for post in postt:
+        total_likes += post.likes
 
-    # suggested_profile = prof_sug[:4]
 
 
     context ={
@@ -609,9 +606,9 @@ def savedpost(request, user):
         "switch": switch,
         "profile_visited_followers": profile_visited_followers,
         "profile_visited_following": profile_visited_following,
-        # "post_comments": post_comments,
+        "post": postt,
         "saved": saved,
-        # "logged_in_user": logged_in_user,
+        "likes": total_likes
     }
 
     return render(request, "saved.html", context)
@@ -761,7 +758,7 @@ def likethissinyou(request, user):
 def userliked(request, user):
     user_pro = User.objects.get(username=user)
     profile =  Profile.objects.get(user=user_pro)
-    post = Posts.objects.filter(profile=profile)
+    postt = Posts.objects.filter(profile=profile)
     user_obj = Profile.objects.get(user=request.user)
     likes = Like_post.objects.filter(user=profile).order_by("-post__likes")
     logged_in_user = request.user
@@ -786,10 +783,16 @@ def userliked(request, user):
     random.shuffle(prof_sug)
 
     suggested_profile = prof_sug[:4]
+    
+    total_likes = 0  
+
+    for post in postt:
+        total_likes += post.likes
 
     context ={
         "profile": profile,
-        "post": post,
+        "post": postt,
+        "total_likes": total_likes,
         "switch": switch,
         "profile_visited_followers": profile_visited_followers,
         "profile_visited_following": profile_visited_following,
@@ -999,13 +1002,58 @@ def search(request):
         param = request.POST['param']
         context={}
         if param:
-            users = Profile.objects.filter(Q(user__username__icontains=param) | Q(display_name__icontains=param))
+            users = Profile.objects.filter(Q(user__username__icontains=param) | Q(display_name__icontains=param) | Q(bio__icontains=param))
             posts = Posts.objects.filter(Q(caption__icontains=param))
     context = {
-        'users': users,
+        'user': users,
         'post': posts,
         'profile': profile,
         'param': param,
     }
 
     return render(request, "search.html", context)
+
+
+
+
+
+
+
+def changepassword(request):
+    userobj = User.objects.get(username=request.user)
+    profile =  Profile.objects.get(user=userobj)
+    
+    if request.method == "POST":
+        oldpassword = request.POST['old']
+        newpassword = request.POST['new']
+        confpassword = request.POST['conf']
+
+        if not userobj.check_password(oldpassword):
+            messages.error(request, "Incorrect old password.")
+            return redirect('changepassword') 
+        
+        elif newpassword != confpassword:
+            messages.error(request, "Password did not match.")
+            return redirect(changepassword)
+        
+        elif len(newpassword) <= 7:
+            messages.error(request, "Password too weak.")
+            return redirect(changepassword)
+        
+        elif newpassword in profile.user.username or newpassword in profile.user.email:
+            messages.error(request, "Password cannot be similar to your details.")
+            return redirect('changepassword')
+        
+        else:
+            userobj.set_password(newpassword)
+            userobj.save()
+            return redirect(index)
+            
+    
+    
+    
+    context = {
+        'profile': profile,
+    }
+
+    return render(request, "changepassword.html", context)
