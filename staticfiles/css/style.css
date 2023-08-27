@@ -137,6 +137,55 @@ aside .user img{
 
 
 
+.userscont::-webkit-scrollbar{
+    display: none;
+}
+
+
+.userscont{
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    overflow-x: scroll;
+    border-bottom: .1rem solid ;
+}
+
+
+.userscont a{
+    background: var(--accent-color);
+    padding: 0 .5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 16rem;
+    transition: .4s;
+}
+
+.userscont a:hover{
+    background: var(--bg-color);
+}
+
+.userscont a img{
+    width: 100%;
+    height: 50%;
+    border-radius: .5rem;
+    object-fit: cover;
+}
+
+
+.userscont a p{
+    color: var(--text-color);
+    transition: .4s;
+}
+
+
+
+.userscont a small{
+    margin-top: -.5rem;
+    color: var(--btn-color);
+}
 
 
 
