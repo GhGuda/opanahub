@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpanaHub</title>
-    <link rel="stylesheet" href="{% static 'css/seting.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pana.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -70,6 +72,7 @@
 
             </div>
 
+
             <div class="user">
                 <a href="{% url 'logout' %}">LogOut
                 <img src="{{profile.profile_img.url}}" alt="">
@@ -83,19 +86,22 @@
                 <div class="head">OpanaHub</div>
             </div>
            <div class="search">
-                <div class="covv">
-                    {% if profile.display_name %}
-                    <p class="ttt">{{profile.display_name}}</p>
-                    {% endif %}
-                    <small>@{{profile.user}}</small><br>
-                    <a href="/frontpage">Home</a>
-                </div>
+                <!-- <form action="" autocomplete="off"> -->
+                    <!-- <input type="text" name="search" placeholder="Search">
+                    <button type="submit">search</button> -->
+
+                    <p class="ttt">Account Deactivation</p>
+                <!-- </form> -->
                 <div class="lis">
                     <div class="toggler" onclick="Drop()">
                         <div class="line"></div>
                         <div class="line"></div>
                         <div class="line"></div>
                     </div>
+
+                    <a href="#">
+                        <img src="{{profile.profile_img.url}}" alt="">
+                    </a>
                 </div>
 
                 <nav>
@@ -161,37 +167,14 @@
                 </nav>
            </div>
 
-
-
-            <div class="format">
-                <a href="/changeusername">
-                    <div class="useme">
-                        <h1><strong>Username</strong></h1>
-                        <p>@{{profile.user}}</p>
-                    </div>
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                <a href="/changeemail">
-                    <div class="useme">
-                        <h1><strong>Email</strong></h1>
-                        <p>{{profile.user.email}}</p>
-                    </div>
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                <a href="/changepassword">
-                    <div class="useme">
-                        <h1><strong>Change password</strong></h1>
-                    </div>
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
-                <a href="{% url 'deactivate_account' %}">
-                    <div class="useme">
-                        <h1><strong>Deactivate Account</strong></h1>
-                        <p>@{{profile.user}}</p>
-                    </div>
-                    <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
+          <div class="upload">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <textarea name="reason" placeholder="Reason"></textarea>
+                <input class="input" type="submit" value="Submit" id="deactivateBtn">
+            </form>
+          </div>
+           
         </div>
 
 
@@ -227,30 +210,6 @@
             </div>
 
 
-            <div class="people">
-                <p class="head">People you may know</p>
-                
-                <div>
-                    {% for users in suggested_profile %}
-                    <a href="/profile/{{users.user}}" class="users">
-                        <img src="{{users.profile_img.url}}" alt="">
-                        <div class="owner">
-                            <div class="time">
-                                {% if users.display_name %}
-                                <p>{{users.display_name}}</p>
-                                {% endif %}
-                                <small>@{{users.user}}</small>
-                            </div>
-                        </div>
-                    </a>
-                    {% endfor %}
-
-                    <!-- <div class="views">
-                        <a href="#">View all</a>
-                    </div> -->
-                </div>
-                
-            </div>
         </div>
     </div>
 
@@ -262,5 +221,10 @@
             drop.classList.toggle("nav_show")
         }
     </script>
+
+<script>
+
+</script>
+
 </body>
 </html>

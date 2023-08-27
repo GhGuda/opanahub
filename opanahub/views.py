@@ -5,8 +5,8 @@ from .models import *
 from django.contrib.auth.decorators import login_required
 import random
 from django.db.models import Q
-
-
+import re, os
+from django.conf import settings
 
 
 #for change password mail
@@ -68,32 +68,47 @@ def register(request):
         password2 = request.POST['password2']
         
         if password == password2:
-            if len(username) <= 0:
+            if not re.match(r'^[a-zA-Z0-9_]+$', username):
+                messages.error(request, "Username can only contain letters, numbers, and underscores!")
+                return redirect('register')
+            
+            elif username.isdigit(): 
+                messages.error(request, "Username cannot consist of only numbers!")
+                return redirect('register')
+            
+            elif len(username) <= 0:
                 messages.error(request, "Enter username!")
                 return redirect('register')
-            if password == username:
-                messages.error(request, "Password similar to username!")
-                return redirect('register')
+            
             elif ' ' in username:
-                messages.error(request, "Username cannot contain spaces!")
+                messages.error(request, "Username cannot contain spaces, can only contain letters, numbers, and underscores!")
                 return redirect('register')
-            elif len(email) <= 0:
-                messages.error(request, "Enter email!")
-                return redirect('register')
-            elif len(password) < 8:
-                messages.error(request, "Password is weak, enter strong password!")
-                return redirect('register')
+            
             elif User.objects.filter(username__iexact=username).exists():
                 messages.error(request, "Username taken!")
                 return redirect('register')
+            
+            elif password == username:
+                messages.error(request, "Password similar to username!")
+                return redirect('register')
+            
+            elif len(email) <= 0:
+                messages.error(request, "Enter email!")
+                return redirect('register')
+            
+            elif len(password) < 8:
+                messages.error(request, "Password is weak, enter strong password!")
+                return redirect('register')
+            
             elif User.objects.filter(email=email).exists():
                 messages.error(request, "Email taken!")
                 return redirect('register')
+            
             else:
                 new_user = User.objects.create_user(username=username, email=email, password=password)
-                subject = 'Wellcome to OpanaHub'
+                subject = 'Welcome to OpanaHub'
                 message = f'Hello {username.capitalize()}, Welcome to Opanahub! We\'re excited to have you as a part of our community.'
-                from_email = 'your@example.com'
+                from_email = 'no-reply-opanahub@gmail.com'
                 recipient_list = [email]
                 send_mail(subject, message, from_email, recipient_list)
                 new_user.save()
@@ -621,7 +636,7 @@ def savedpost(request, user):
 
     context ={
         "profile": profile,
-        "post": post,
+        "post": postt,
         "switch": switch,
         "profile_visited_followers": profile_visited_followers,
         "profile_visited_following": profile_visited_following,
@@ -1003,7 +1018,7 @@ def setting(request):
 
 
 
-
+@login_required(login_url=index)
 def search(request):
     profile =  Profile.objects.get(user=request.user)
     context = {'profile': profile}
@@ -1027,7 +1042,7 @@ def search(request):
 
 
 
-
+@login_required(login_url=index)
 def myaccount(request):
     profile =  Profile.objects.get(user=request.user)
 
@@ -1087,17 +1102,10 @@ def changepassword(request):
     return render(request, "changepassword.html", context)
 
             
-    
-    
-    
-    context = {
-        'profile': profile,
-    }
-
-    return render(request, "changepassword.html", context)
 
 
 
+@login_required(login_url=index)
 def changeusername(request):
     userobj = User.objects.get(username=request.user)
     profile =  Profile.objects.get(user=userobj)
@@ -1105,15 +1113,30 @@ def changeusername(request):
     if request.method == "POST":
         username = request.POST['username']
         
-        if User.objects.filter(username=username):
+        if User.objects.filter(username__iexact=username).exists():
             messages.error(request, "Username already taken.")
             return redirect('changeusername')
-        elif ' ' in username:
-            messages.error(request, "Username cannot contain spaces.")
+        
+        elif not re.match(r'^[a-zA-Z0-9_]+$', username):
+            messages.error(request, "Username can only contain letters, numbers, and underscores.")
             return redirect('changeusername')
-        elif len(username) == 0:
+            
+        elif username.isdigit(): 
+            messages.error(request, "Username cannot consist of only numbers.")
+            return redirect('changeusername')
+            
+        elif len(username) <= 0:
             messages.error(request, "Enter username.")
             return redirect('changeusername')
+            
+        elif ' ' in username:
+            messages.error(request, "Username cannot contain spaces, can only contain letters, numbers, and underscores.")
+            return redirect('changeusername')
+            
+        elif userobj.password == username:
+            messages.error(request, "Username is same as your password.")
+            return redirect('changeusername')
+            
         else:
             userobj.username = username
             userobj.save()
@@ -1124,6 +1147,8 @@ def changeusername(request):
     return render(request, "changeusername.html", context)
 
 
+
+@login_required(login_url=index)
 def changeemail(request):
     userobj = User.objects.get(username=request.user)
     profile =  Profile.objects.get(user=userobj)
@@ -1150,4 +1175,28 @@ def changeemail(request):
     return render(request, "changeemail.html", context)
 
 
+@login_required(login_url=index)
+def deactivate_account(request):
+    userobj = User.objects.get(username=request.user)
+    profile =  Profile.objects.get(user=userobj)
+    if request.method == "POST":
+        reason = request.POST['reason']
+        # Send an email to the admin
+        subject = f'ACCOUNT DEACTIVATION from {profile.display_name}'
+        message = f"User {profile.display_name} ({userobj.email}) has deactivated their account.\nReason: {reason}"
+        from_sender = userobj.email
+        recipient_list = [settings.EMAIL_HOST_USER]
+        send_mail(subject, message, from_sender, recipient_list, fail_silently=True)
+        
+        
+        subject = 'ACCOUNT DEACTIVATION'
+        message = f'Hello {profile.user}, we have reviewed you message. Thank you for being part of our community, We wish to see you again.\n You can register anytime.'
+        from_email = 'opanahub@gmail.com'
+        recipient_list = [profile.user.email]
+        send_mail(subject, message, from_email, recipient_list)
 
+        userobj.delete()
+        profile.delete()
+        return redirect(logout)
+    else:
+        return render(request, 'deactivaion.html', {'profile':profile})

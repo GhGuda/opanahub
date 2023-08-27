@@ -356,7 +356,11 @@
                 </div>
                 {% endfor %}
             {% else %}
-                <p style="text-align: center; margin-top:2rem; font-size:1.5rem;">{{profile.user|capfirst}} have no post.</p>
+                {% if profile.user == request.user %}
+                <p style="text-align: center; margin-top:2rem; font-size:1.5rem;">You have no pana yet!</p>
+                {% else %}
+                <p style="text-align: center; margin-top:2rem; font-size:1.5rem;">{{profile.user|capfirst}} have not pana yet!</p>
+                {% endif %}
             {% endif %}
         </div>           
         </div>
