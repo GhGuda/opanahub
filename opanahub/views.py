@@ -6,6 +6,14 @@ from django.contrib.auth.decorators import login_required
 import random
 from django.db.models import Q
 
+
+
+
+#for change password mail
+
+from django.urls import reverse
+
+
 # for password reset form customization
 
 from django.core.mail import send_mail, BadHeaderError
@@ -54,10 +62,11 @@ def logout(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
+        
         if password == password2:
             if len(username) <= 0:
                 messages.error(request, "Enter username!")
@@ -65,13 +74,16 @@ def register(request):
             if password == username:
                 messages.error(request, "Password similar to username!")
                 return redirect('register')
+            elif ' ' in username:
+                messages.error(request, "Username cannot contain spaces!")
+                return redirect('register')
             elif len(email) <= 0:
                 messages.error(request, "Enter email!")
                 return redirect('register')
             elif len(password) < 8:
                 messages.error(request, "Password is weak, enter strong password!")
                 return redirect('register')
-            elif User.objects.filter(username=username).exists():
+            elif User.objects.filter(username__iexact=username).exists():
                 messages.error(request, "Username taken!")
                 return redirect('register')
             elif User.objects.filter(email=email).exists():
@@ -79,6 +91,11 @@ def register(request):
                 return redirect('register')
             else:
                 new_user = User.objects.create_user(username=username, email=email, password=password)
+                subject = 'Wellcome to OpanaHub'
+                message = f'Hello {username.capitalize()}, Welcome to Opanahub! We\'re excited to have you as a part of our community.'
+                from_email = 'your@example.com'
+                recipient_list = [email]
+                send_mail(subject, message, from_email, recipient_list)
                 new_user.save()
 
                 auth_new_user = auth.authenticate(username=username, password=password)
@@ -103,6 +120,7 @@ def register(request):
 def password_reset_request(request):
     if request.method == "POST":
         password_form = PasswordResetForm(request.POST)
+        user = request.user
         if password_form.is_valid():
             data = password_form.cleaned_data['email']
             user_email = User.objects.filter(Q(email=data))
@@ -131,7 +149,8 @@ def password_reset_request(request):
     
     
     context={
-        'password_form' : password_form
+        'password_form' : password_form,
+        'user' : user
     }
     
     
@@ -979,17 +998,6 @@ def setting(request):
             profile.save()
             return redirect('setting')
 
-            # logged_in_user = request.user
-
-            # if logged_in_user.is_authenticated and logged_in_user.profile == profile:
-            #     prof_sug = list(Profile.objects.exclude(user=user_pro))
-            # else:
-            #     prof_sug = list(Profile.objects.exclude(user=user_obj.user))
-
-            # random.shuffle(prof_sug)
-
-            # suggested_profile = prof_sug[:4]
-
     else:
         return render(request, "settings.html", {'profile': profile,})
 
@@ -998,27 +1006,45 @@ def setting(request):
 
 def search(request):
     profile =  Profile.objects.get(user=request.user)
+    context = {'profile': profile}
     if request.method == "POST":
         param = request.POST['param']
-        context={}
-        if param:
+    
+        if len(param) == 0:
+            return redirect(frontpage)
+        
+        elif param:
             users = Profile.objects.filter(Q(user__username__icontains=param) | Q(display_name__icontains=param) | Q(bio__icontains=param))
             posts = Posts.objects.filter(Q(caption__icontains=param))
-    context = {
-        'user': users,
-        'post': posts,
-        'profile': profile,
-        'param': param,
-    }
+            context = {
+                    'usery': users,
+                    'post': posts,
+                    'profile': profile,
+                    'param': param,
+                }
 
     return render(request, "search.html", context)
 
 
 
 
+def myaccount(request):
+    profile =  Profile.objects.get(user=request.user)
+
+
+    context = {
+        'profile': profile,
+    }
+    return render(request, "myaccount.html", context)
 
 
 
+
+
+
+
+
+@login_required(login_url=index)
 def changepassword(request):
     userobj = User.objects.get(username=request.user)
     profile =  Profile.objects.get(user=userobj)
@@ -1045,9 +1071,21 @@ def changepassword(request):
             return redirect('changepassword')
         
         else:
+            subject = 'Password Change Notification'
+            message = f'Hello {profile.user.capitalize()}, your password has been changed. If you did not perform this action, please reset your password immediately. Visit the login page and tap on Reset.'
+            from_email = 'your@example.com'
+            recipient_list = [profile.user.email]
+            send_mail(subject, message, from_email, recipient_list)
             userobj.set_password(newpassword)
             userobj.save()
-            return redirect(index)
+            return redirect('index')
+    
+    context = {
+        'profile': profile,
+    }
+
+    return render(request, "changepassword.html", context)
+
             
     
     
@@ -1057,3 +1095,59 @@ def changepassword(request):
     }
 
     return render(request, "changepassword.html", context)
+
+
+
+def changeusername(request):
+    userobj = User.objects.get(username=request.user)
+    profile =  Profile.objects.get(user=userobj)
+    
+    if request.method == "POST":
+        username = request.POST['username']
+        
+        if User.objects.filter(username=username):
+            messages.error(request, "Username already taken.")
+            return redirect('changeusername')
+        elif ' ' in username:
+            messages.error(request, "Username cannot contain spaces.")
+            return redirect('changeusername')
+        elif len(username) == 0:
+            messages.error(request, "Enter username.")
+            return redirect('changeusername')
+        else:
+            userobj.username = username
+            userobj.save()
+            return redirect(logout)
+    context = {
+        'profile': profile,
+    }
+    return render(request, "changeusername.html", context)
+
+
+def changeemail(request):
+    userobj = User.objects.get(username=request.user)
+    profile =  Profile.objects.get(user=userobj)
+    
+    if request.method == "POST":
+        email = request.POST['email']
+        
+        if User.objects.filter(email=email):
+            messages.error(request, "Email already taken.")
+            return redirect('changeemail')
+        elif ' ' in email:
+            messages.error(request, "Email cannot contain spaces.")
+            return redirect('changeemail')
+        elif len(email) == 0:
+            messages.error(request, "Enter email.")
+            return redirect('changeemail')
+        else:
+            userobj.email = email
+            userobj.save()
+            return redirect(changeemail)
+    context = {
+        'profile': profile,
+    }
+    return render(request, "changeemail.html", context)
+
+
+

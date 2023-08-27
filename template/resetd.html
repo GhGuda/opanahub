@@ -31,7 +31,7 @@
             <input type="submit" class="btn" value="Login">
         </form> -->
         <img src="/static/img/congratulations - work.jpg" alt="">
-        <h3>Congratulations<b>{{user.username}}</b>, your password was reset successfully, <a href="/">Login</a></h3>
+        <h3>Congratulations<b> {{user.username|capfirst}}</b>, your password was reset successfully, <a href="/logout">Login</a></h3>
         <p></p>
 
         <!-- <div class="ask">

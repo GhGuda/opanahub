@@ -152,7 +152,36 @@ aside .user img{
 
 
 
+.format{
+    width: 100%;
+}
 
+.format a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--lost-color);
+    color: var(--text-color);
+    transition: .4s;
+}
+
+.format a:hover{
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+.format a .useme p{
+    margin-top: -1.2rem;
+    color: var(--bg-color);
+}
+
+
+.format a i{
+    font-size: 2rem;
+    color: var(--text-hover-color);
+}
 
 
 

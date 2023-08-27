@@ -174,17 +174,19 @@
             </a> {% endcomment %}
 
            <div class="card">
-            {% if user %}
+            {% if usery %}
             <p style="margin: 1rem ; font-size: 1.2rem;">Showing users results for "{{param}}"</p>
             {% else %}
-            <p style="margin: 1rem ; font-size: 1.2rem;">No user found for "{{param}}"</p>
+            <p style="margin: 1rem ; font-size: 1.2rem; text-align:center;">No user found for "{{param}}"</p>
             {% endif %}
             <div class="userscont">
-                {% for users in user %}
+                {% for users in usery %}
                 <a href="/profile/{{users.user}}" class="user_card">
                     <img src="{{users.profile_img.url}}" alt="">
                     {% if users.display_name %}
                     <p>{{users.display_name}}</p>
+                    {% else %}
+                    <p></p>
                     {% endif %}
                     <small>@{{users.user}}</small>
                 </a>
@@ -315,7 +317,7 @@
                 </div>
             {% endfor %}
             {% else %}
-            <h1 style="text-align:center; margin: 5rem 0;">No results for "{{param}}"🤦‍♂️</h1>
+            <h1 style="text-align:center; margin: 5rem 0;">No pana found for "{{param}}"🤦‍♂️</h1>
             {% endif %}
            </div>
         </div>
