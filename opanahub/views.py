@@ -145,7 +145,7 @@ def password_reset_request(request):
                     email_template_name = "passwordtext.html"
                     parameters={
                         'email': user.email,
-                        'domain': '127.0.0.1:8000',
+                        'domain': 'opanahub.pythonanywhere.com',
                         'site_name': 'OpanaHub',
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'token': default_token_generator.make_token(user),
@@ -1087,7 +1087,7 @@ def changepassword(request):
         
         else:
             subject = 'Password Change Notification'
-            message = f'Hello {profile.user.capitalize()}, your password has been changed. If you did not perform this action, please reset your password immediately. Visit the login page and tap on Reset.'
+            message = f'Hello {profile.user}, your password has been changed. If you did not perform this action, please reset your password immediately. Visit the login page and tap on Reset.'
             from_email = 'your@example.com'
             recipient_list = [profile.user.email]
             send_mail(subject, message, from_email, recipient_list)
